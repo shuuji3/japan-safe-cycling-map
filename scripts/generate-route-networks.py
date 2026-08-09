@@ -4,7 +4,11 @@
 Planetiler custommap cannot resolve route relations onto member ways, so we do it
 here with pyosmium and feed the result as a geojson source.
 """
-import argparse, json, osmium
+
+import argparse
+import json
+
+import osmium
 
 NETWORKS = {"icn", "ncn", "rcn", "lcn"}
 
@@ -32,7 +36,9 @@ def main():
 
     rc = RelCollect()
     rc.apply_file(args.pbf, locations=False)
-    print(f"route-bicycle member ways: {len(rc.way2net)}", file=__import__("sys").stderr)
+    print(
+        f"route-bicycle member ways: {len(rc.way2net)}", file=__import__("sys").stderr
+    )
 
     class WayGen(osmium.SimpleHandler):
         def __init__(self):
@@ -47,11 +53,13 @@ def main():
             if len(coords) < 2:
                 return
             for net in sorted(nets):
-                self.features.append({
-                    "type": "Feature",
-                    "properties": {"osm_id": w.id, "network": net},
-                    "geometry": {"type": "LineString", "coordinates": coords},
-                })
+                self.features.append(
+                    {
+                        "type": "Feature",
+                        "properties": {"osm_id": w.id, "network": net},
+                        "geometry": {"type": "LineString", "coordinates": coords},
+                    }
+                )
 
     wg = WayGen()
     wg.apply_file(args.pbf, locations=True)

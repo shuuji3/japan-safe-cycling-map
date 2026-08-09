@@ -21,7 +21,7 @@ curl --user-agent "japan-safe-cycling-map (https://github.com/shuuji3/japan-safe
   -L --fail -o "$OSM_PATH" -z "$OSM_PATH" "$OSM_URL"
 
 echo "Resolving route=bicycle relations -> $ROUTES_GEOJSON ..."
-python3 scripts/generate-route-networks.py "$OSM_PATH" "$ROUTES_GEOJSON"
+uv run python3 scripts/generate-route-networks.py "$OSM_PATH" "$ROUTES_GEOJSON"
 
 mkdir -p "$(dirname "$OUTPUT")"
 
