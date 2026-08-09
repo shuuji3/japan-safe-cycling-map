@@ -1,58 +1,62 @@
-Safe Cycling Map
-================
+# Japan Safe Cycling Map
+Japan-focused cycling roads map built on OpenStreetMap (OSM) data. Inspired
+by [jakecoppinger/safe-cycling-map](https://github.com/jakecoppinger/safe-cycling-map), focused on Japanese road conventions.
 
-A map showing how safe a street is for cycling, based on (arbitrary) metrics. See the
-[key](https://github.com/jakecoppinger/safe-cycling-map/blob/main/docs/key.md) for how street safety is calculated.
+Overlays a color-coded bike infrastructure layer on a sharp basemap. Click or
+hover a line to see the actual OSM tags behind it. The street basemap is served
+by [Protomaps](https://protomaps.com). An aerial mode switches to a
+[GSI Japan satellite
+hybrid](https://maps.gsi.go.jp/development/ichiran.html) 
+via the basemap switcher.
 
-This is a work in progress side project. This data is not guaranteed to be accurate.
+Legend categories for bake roads in Japan:
 
-When zoomed in close, individual road and bicycle lanes are shown. When zoomed out, streets are
-coloured by their safety ratings.
+- <span role="img" aria-label="green" style="color:#1a9850;">■</span> 自転車専用道路・自転車道 (dedicated cycleways)
+- <span role="img" aria-label="light green" style="color:#91cf60;">■</span> 自転車専用通行帯 (cycle lanes)
+- <span role="img" aria-label="orange" style="color:#fdae61;">■</span> 自転車歩行者道 (shared footpaths)
+- <span role="img" aria-label="red" style="color:#d73027;">■</span> 車道共有 (shared lanes / sharrow markings)
+- <span role="img" aria-label="gray" style="color:#969696;">■</span> その他 (crossings, ASLs, separated lines)
 
-# Disclaimer
-Warning: This is an arbitrary rating system. Data is open source and not guaranteed to be accurate.
+## Data Flow
 
-This map uses OpenStreetMap data. It is not a complete or accurate map of the world and should not
-be used in such a manner that deficiencies, omissions, inaccuracies or errors could result in death,
-loss or injury. The maps are an iterative ongoing work-in-progress and everyone is welcome to
-contribute editing the OpenStreetMap data if you spot inaccuracies. (warning courtesy of [CyclOSM](https://www.cyclosm.org/))
+1. Download the Japan OSM extract (`data/japan.osm.pbf`) from [Geofabrik](https://download.geofabrik.de/asia/japan-latest.osm.pbf).
+2. Resolve `route=bicycle` relations (networks `icn`/`ncn`/`rcn`/`lcn`) into
+   `data/route_networks.geojson` with
+   [scripts/generate-route-networks.py](scripts/generate-route-networks.py)
+   (pyosmium), since Planetiler can't resolve relations onto member ways.
+3. Build the overlay `public/bike.pmtiles` (z0–z16) with Planetiler
+   ([scripts/build-bike-overlay.sh](scripts/build-bike-overlay.sh), schema
+   [scripts/planetiler/bike-schema.yml](scripts/planetiler/bike-schema.yml)),
+   using both the OSM extract and the route GeoJSON as sources.
+4. Upload `public/bike.pmtiles` (>20MB) to the cloud storage from GitHub Actions
+   [.github/workflows/publish-bike-tiles.yml](.github/workflows/publish-bike-tiles.yml).
 
-# Contributing: Found a mislabelled street? You can fix it!
+## Development
 
-Head to https://bikemaps.org/blog/post/improving-bicycling-data-on-openstreetmap for instructions
-on how to fix OpenStreetMap data.
+```shell
+nvm install
+npm i --legacy-peer-deps
+npm run start  # dev server at http://localhost:5000
+```
 
-![Screenshot of map](img/safe-cycling-map-2022-01-05-v2.jpg)
+## Deploy
 
-A map of bike infrastructure using [osm2streets](https://github.com/a-b-street/osm2streets) output.
+The bile road tile is published to cloud storage from GitHub Actions
+workflow. The site itself deploys to GitHub Pages on push
+to `feat/japan-safe-cycling-map` branch, reading the bike tile from the cloud storage URL set in
+`REACT_APP_BIKE_PMTILES_URL`.
 
-Uses [osm2streets-vector-tileserver](https://github.com/jakecoppinger/osm2streets-vector-tileserver),
-a vector tileserver I wrote to generate Protobuf GeoJSON vector tiles using the JS bindings to
-osm2streets (which is written in Rust).
+## Not implemented
 
+- The original project's street safety rating calculation is not part of this
+  rewrite (yet).
+- The rust-based `osm2streets` vector tile rendering from the original repo is not used.
 
-# Local development
+## Disclaimer
 
-See instructions for setting up the backend tileserve at 
-[https://github.com/jakecoppinger/osm2streets-vector-tileserver](https://github.com/jakecoppinger/osm2streets-vector-tileserver)
+OSM data is incomplete and should not be relied on in ways where errors could
+cause harm. Contribute fixes directly to OpenStreetMap.
 
-Install packages:
-`nvm install`
-`npm i --legacy-peer-deps`
+## License
 
-Run dev server:
-`npm run start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It bundles React in production mode and optimizes the build for the best performance.
-
-# License
-GNU GPL v3
+GNU AGPL v3
