@@ -7,6 +7,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 PLANETILER_URL="https://github.com/onthegomap/planetiler/releases/latest/download/planetiler.jar"
+PLANETILER_JAR=".cache/planetiler.jar"
 
 OSM_PATH="data/japan.osm.pbf"
 OSM_URL="https://download.geofabrik.de/asia/japan-latest.osm.pbf"
@@ -26,12 +27,13 @@ uv run python3 scripts/generate-route-networks.py "$OSM_PATH" "$ROUTES_GEOJSON"
 mkdir -p "$(dirname "$OUTPUT")"
 
 echo "Downloading Planetiler if missing ..."
-if [ ! -f planetiler.jar ]; then
-  curl -L --fail -o planetiler.jar "$PLANETILER_URL"
+if [ ! -f "$PLANETILER_JAR" ]; then
+  mkdir -p "$(dirname "$PLANETILER_JAR")"
+  curl -L --fail -o "$PLANETILER_JAR" "$PLANETILER_URL"
 fi
 
 echo "Building bike overlay (z$MINZOOM-z$MAXZOOM) ..."
-java -Xmx8g -jar planetiler.jar generate-custom \
+java -Xmx8g -jar "$PLANETILER_JAR" generate-custom \
   --schema=scripts/planetiler/bike-schema.yml \
   --osm_path="$OSM_PATH" \
   --output="$OUTPUT" \

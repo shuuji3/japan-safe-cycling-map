@@ -8,5 +8,8 @@ build/
 # Downloaded OSM extracts and Planetiler temp data
 data/
 
+# Build tool dependencies (downloaded binaries like Planetiler)
+.cache/
+
 # Generated bike tiles (uploaded to R2, not committed)
 public/bike.pmtiles
