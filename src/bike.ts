@@ -75,6 +75,15 @@ export const BIKE_CLASSES: BikeClassDef[] = [
         { tags: ["cycleway=separate"], meaning: defineMessage({ message: "自転車道が車道本体とは別の独立したライン（ウェイ）として作成済み" }) },
         { tags: ["cycleway=asl"], meaning: defineMessage({ message: "交差点手前の自転車用優先停止スペース（Advanced Stop Line）" }) },
       ],
+      color: "#CC79A7",
+    },
+    {
+      id: "no_cycleway",
+      name: defineMessage({ message: "自転車専用の走行空間なし" }),
+      summary: defineMessage({ message: "この道路に自転車レーン・自転車道・ナビライン等の走行空間がない道路" }),
+      attrs: [
+        { tags: ["cycleway=no", "cycleway:both=no"], meaning: defineMessage({ message: "この道路に自転車の走行空間がないことを明示。なお、片側のみの場合は反対側の走行空間に応じて分類され、両側が対象の場合のみ本カテゴリー" }) },
+      ],
       color: "#969696",
     },
 ];

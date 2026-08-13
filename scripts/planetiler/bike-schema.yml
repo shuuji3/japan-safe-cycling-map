@@ -59,6 +59,11 @@ layers:
           #   shared_lane = cycleway=shared_lane (自転車ナビライン, painted sharrow,
           #                 cycleway:lane=pictogram, NOT a legal lane)
           #   bicycle_designated = shared footway/path where bicycle=designated
+          #   no_cycleway = whole road surveyed and confirmed absent of bike infra
+          #                 (cycleway=no / cycleway:both=no / left+right both no),
+          #                 and cycling not prohibited (bicycle/access not no).
+          #                 cycleway:*:oneway=no is ignored (it means bidirectional
+          #                 flow, not absence). lone :left/:right=no is not enough.
           #   other       = any other cycleway* value
           #
           # NOTE: cycleway:*:lane=advisory does NOT create a class of its own — it is
@@ -70,7 +75,7 @@ layers:
               (feature.tags.has("cycleway","track") || feature.tags.has("cycleway:left","track") || feature.tags.has("cycleway:right","track") || feature.tags.has("cycleway:both","track")) ? "track" :
               (feature.tags.has("cycleway","lane") || feature.tags.has("cycleway:left","lane") || feature.tags.has("cycleway:right","lane") || feature.tags.has("cycleway:both","lane")) ? "bike_lane" :
               (feature.tags.has("cycleway","shared_lane") || feature.tags.has("cycleway:left","shared_lane") || feature.tags.has("cycleway:right","shared_lane") || feature.tags.has("cycleway:both","shared_lane")) ? "shared_lane" :
-              ((feature.tags.has("highway","footway","path","pedestrian") && feature.tags.has("bicycle","designated","yes","permissive")) ? "bicycle_designated" : "other") }
+              ((feature.tags.has("highway","footway","path","pedestrian") && feature.tags.has("bicycle","designated","yes","permissive")) ? "bicycle_designated" : ((!feature.tags.has("bicycle","no") && !feature.tags.has("access","no")) && (feature.tags.has("cycleway","no") || feature.tags.has("cycleway:both","no") || (feature.tags.has("cycleway:left","no") && feature.tags.has("cycleway:right","no")))) ? "no_cycleway" : "other") }
           - key: highway
           - key: oneway
           - key: oneway:bicycle
@@ -280,6 +285,119 @@ examples:
         tags:
           class: other
           highway: residential
+  - name: surveyed no cycleway (cycleway=no)
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: residential
+        cycleway: no
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: no_cycleway
+          highway: residential
+          cycleway: no
+  - name: surveyed no cycleway (cycleway:both=no)
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: residential
+        cycleway:both: no
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: no_cycleway
+          highway: residential
+          cycleway:both: no
+  - name: surveyed no cycleway (left and right both no)
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: residential
+        cycleway:left: no
+        cycleway:right: no
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: no_cycleway
+          highway: residential
+          cycleway:left: no
+          cycleway:right: no
+  - name: lone cycleway:left=no stays other (right side unknown)
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: residential
+        cycleway:left: no
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: other
+          highway: residential
+          cycleway:left: no
+  - name: cycleway=no with bicycle=no excluded from no_cycleway
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: residential
+        cycleway: no
+        bicycle: no
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: other
+          highway: residential
+          cycleway: no
+          bicycle: no
+  - name: cycleway=no with oneway=no stays no_cycleway
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: residential
+        cycleway: no
+        cycleway:left:oneway: no
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: no_cycleway
+          highway: residential
+          cycleway: no
+          cycleway:left:oneway: no
+  - name: bike lane wins over cycleway:right=no
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: residential
+        cycleway:left: lane
+        cycleway:right: no
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: bike_lane
+          highway: residential
+          cycleway:left: lane
+          cycleway:right: no
   - name: national cycle route member way
     input:
       geometry: line
