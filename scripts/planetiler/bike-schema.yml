@@ -10,12 +10,12 @@ sources:
   osm:
     type: osm
     url: '${ args.osm_url }'
-    local_path: data/japan.osm.pbf
+    local_path: .cache/japan.osm.pbf
   # Route=bicycle member ways resolved from relations by
   # scripts/generate-route-networks.py (custommap cannot process relations).
   route:
     type: geojson
-    local_path: data/route_networks.geojson
+    local_path: .cache/route_networks.geojson
 layers:
   - id: route_network
     features:
