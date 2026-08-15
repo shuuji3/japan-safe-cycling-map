@@ -20,6 +20,21 @@ Legend categories for bake roads in Japan:
 
 ## Data Flow
 
+```mermaid
+flowchart TB
+    A[<code>japan-latest.osm.pbf</code><br/>OSM Japan map data]
+    B[<code>route_networks.geojson</code><br/>long-distance bike routes]
+    C[<code>bike.pmtiles</code><br/>finished map tiles]
+    D[cloud storage<br/>files kept online]
+    E[web map<br/>shown in the browser]
+
+    A -->|<code>generate-route-networks.py</code><br/>a script picks out the relations of bike routes| B
+    A -->|Planetiler<br/>raw data turned into map tiles| C
+    B -->|added as extra info| C
+    C -->|<code>publish-bike-tiles.yml</code><br/>GitHub Actions<br/>uploaded automatically| D
+    D -->|downloaded when<br/>the page opens| E
+```
+
 1. Download the Japan OSM extract (`data/japan.osm.pbf`) from [Geofabrik](https://download.geofabrik.de/asia/japan-latest.osm.pbf).
 2. Resolve `route=bicycle` relations (networks `icn`/`ncn`/`rcn`/`lcn`) into
    `data/route_networks.geojson` with
