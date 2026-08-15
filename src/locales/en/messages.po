@@ -59,6 +59,10 @@ msgstr "A road with no cycling space such as a cycle lane, cycle track, or nav-l
 msgid "その他（付帯設備・属性）"
 msgstr "Other (auxiliary facilities and attributes)"
 
+#: src/MobileNav.tsx:99
+msgid "カテゴリー"
+msgstr "Categories"
+
 #: src/BikeLegend.tsx:176
 msgid "ソースコード"
 msgstr "Source code"
@@ -116,6 +120,7 @@ msgid "地元のルート"
 msgstr "Local route"
 
 #: src/LayerSwitcher.tsx:14
+#: src/MobileNav.tsx:108
 msgid "地図"
 msgstr "Map"
 
@@ -151,6 +156,10 @@ msgstr "Shared carriageway section with no dedicated lane; riding position is sh
 msgid "指定標識等により自転車の通行が許可・指定された歩道"
 msgstr "Sidewalk where bicycle use is permitted or designated by signage"
 
+#: src/MobileNav.tsx:89
+msgid "検索"
+msgstr "Search"
+
 #: src/bike.ts:65
 msgid "矢羽根型表示（ナビマーク・ナビライン）がある車道共有区間"
 msgstr "Shared carriageway section with sharrow markings (navi marks / navi lines)"
@@ -184,6 +193,7 @@ msgid "自転車道のカテゴリー"
 msgstr "Cycleway categories"
 
 #: src/LayerSwitcher.tsx:14
+#: src/MobileNav.tsx:108
 msgid "航空写真"
 msgstr "Aerial"
 

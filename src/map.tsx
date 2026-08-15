@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./App.css";
-import { BikeLegend } from "./BikeLegend";
-import { SearchBox } from "./SearchBox";
 import {
   BIKE_CLASSES,
   ROUTE_NETWORKS,
@@ -16,6 +14,7 @@ import {
 import { featurePopover } from "./featureInfo";
 import { applyBasemap, Basemap } from "./basemap";
 import { LayerSwitcher } from "./LayerSwitcher";
+import { MobileNav } from "./MobileNav";
 maplibregl.workerUrl = "/maplibre-gl-csp-worker.js";
 
 function MapComponent() {
@@ -186,18 +185,18 @@ function MapComponent() {
 
   return (
     <div>
-      <SearchBox
-        onSelect={(coords) =>
-          mapRef.current?.flyTo({ center: coords, zoom: 13 })
-        }
-      />
-      <BikeLegend
+      <MobileNav
         visible={visible}
         onToggle={(id, checked) =>
           setVisible((v) => ({ ...v, [id]: checked }))
         }
-        open={legendOpen}
-        handleOpen={() => setLegendOpen((v) => !v)}
+        onSelect={(coords) =>
+          mapRef.current?.flyTo({ center: coords, zoom: 13 })
+        }
+        mode={basemap}
+        onBasemapToggle={setBasemap}
+        legendOpen={legendOpen}
+        onLegendToggle={() => setLegendOpen((v) => !v)}
       />
       <LayerSwitcher mode={basemap} onToggle={setBasemap} />
       <div ref={mapContainer} className="map-container" />
