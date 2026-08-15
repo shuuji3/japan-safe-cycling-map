@@ -16,14 +16,18 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      - name: Resolve OSM extract date
+        id: osm
+        run: |
+          url="$(curl -sI -o /dev/null -w '%{redirect_url}' https://download.geofabrik.de/asia/japan-latest.osm.pbf)"
+          echo "stamp=$(basename "$url" .osm.pbf)" >> "$GITHUB_OUTPUT"
+
       - name: Cache OSM extract and build tools (.cache)
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: cache
         with:
           path: .cache
-          key: bike-cache-${{ runner.os }}-${{ hashFiles('scripts/planetiler/bike-schema.yml') }}
-          restore-keys: |
-            bike-cache-${{ runner.os }}-
+          key: bike-cache-${{ runner.os }}-${{ steps.osm.outputs.stamp }}
 
       - name: Install rclone
         run: |
