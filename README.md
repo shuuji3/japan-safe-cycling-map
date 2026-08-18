@@ -51,19 +51,31 @@ flowchart TB
    `data/route_networks.geojson` with
    [scripts/generate-route-networks.py](scripts/generate-route-networks.py)
    (pyosmium), since Planetiler can't resolve relations onto member ways.
-3. Build the overlay `public/bike.pmtiles` (z0–z16) with Planetiler
-   ([scripts/build-bike-overlay.sh](scripts/build-bike-overlay.sh), schema
+3. Build the overlay `public/bike.pmtiles` (z0–z16) with Planetiler via the
+   project [`Makefile`](Makefile) (`make`, schema
    [scripts/planetiler/bike-schema.yml](scripts/planetiler/bike-schema.yml)),
    using both the OSM extract and the route GeoJSON as sources.
 4. Upload `public/bike.pmtiles` (>20MB) to the cloud storage from GitHub Actions
    [.github/workflows/publish-bike-tiles.yml](.github/workflows/publish-bike-tiles.yml).
 
+## Requirements
+
+- [mise](https://mise.jdx.dev) (manages Java, Node, uv)
+- GNU make and curl
+
 ## Development
 
 ```shell
-nvm install
+mise install
 npm i --legacy-peer-deps
 npm run start  # dev server at http://localhost:5000
+```
+
+Rebuild the bike tiles (re-checks updated OSM, resolves routes, runs
+Planetiler):
+
+```shell
+npm run update-bike-data
 ```
 
 ## Deploy

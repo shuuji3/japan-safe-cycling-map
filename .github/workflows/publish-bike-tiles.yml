@@ -43,7 +43,7 @@ jobs:
         run: uv sync --frozen --no-install-project
 
       - name: Build bike tiles
-        run: scripts/build-bike-overlay.sh
+        run: make
 
       - name: Upload tiles to R2
         env:

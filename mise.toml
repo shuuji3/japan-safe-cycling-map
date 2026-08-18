@@ -1,0 +1,4 @@
+[tools]
+java = "latest"
+node = "16.18.0"
+uv = "latest"

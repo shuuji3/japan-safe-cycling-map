@@ -75,7 +75,7 @@
     "i18n:extract": "lingui extract",
     "i18n:compile": "lingui compile",
     "deploy": "npm run build && rsync -r --progress build/ ../deploy-safe-cycling-map/ && pushd ../deploy-safe-cycling-map/ && git add -A && git commit -m \"Update\" && git push && popd && echo \"Deploy done\"",
-    "update-bike-data": "scripts/build-bike-overlay.sh"
+    "update-bike-data": "make"
   },
   "eslintConfig": {
     "extends": "react-app"
