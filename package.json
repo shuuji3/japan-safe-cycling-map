@@ -67,6 +67,8 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
+    "prestart": "node scripts/copy-maplibre-worker.mjs",
+    "prebuild": "node scripts/copy-maplibre-worker.mjs",
     "start": "PORT=5000 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
