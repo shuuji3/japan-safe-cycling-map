@@ -2,6 +2,17 @@
 Japan-focused cycling roads map built on OpenStreetMap (OSM) data. Inspired
 by [jakecoppinger/safe-cycling-map](https://github.com/jakecoppinger/safe-cycling-map), focused on Japanese road conventions.
 
+<figure style="display: flex; gap: 1rem; align-items: flex-start; margin: 0;">
+  <div>
+    <img src="img/screenshot-map.png" alt="Street map view showing color-coded bike infrastructure">
+    <figcaption>Street map view</figcaption>
+  </div>
+  <div>
+    <img src="img/screenshot-satellite.png" alt="GSI satellite hybrid view">
+    <figcaption>Satellite view</figcaption>
+  </div>
+</figure>
+
 Overlays a color-coded bike infrastructure layer on a sharp basemap. Click or
 hover a line to see the actual OSM tags behind it. The street basemap is served
 by [Protomaps](https://protomaps.com). An aerial mode switches to a
