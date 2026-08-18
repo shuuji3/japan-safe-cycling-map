@@ -4,11 +4,11 @@ by [jakecoppinger/safe-cycling-map](https://github.com/jakecoppinger/safe-cyclin
 
 <figure style="display: flex; gap: 1rem; align-items: flex-start; margin: 0;">
   <div>
-    <img src="img/screenshot-map.png" alt="Street map view showing color-coded bike infrastructure">
+    <img src="public/screenshot-map.png" alt="Street map view showing color-coded bike infrastructure">
     <figcaption>Street map view</figcaption>
   </div>
   <div>
-    <img src="img/screenshot-satellite.png" alt="GSI satellite hybrid view">
+    <img src="public/screenshot-satellite.png" alt="GSI satellite hybrid view">
     <figcaption>Satellite view</figcaption>
   </div>
 </figure>
