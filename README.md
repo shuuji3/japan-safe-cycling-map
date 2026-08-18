@@ -11,12 +11,12 @@ via the basemap switcher.
 
 Legend categories for bake roads in Japan:
 
-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PHJlY3Qgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjMWE5ODUwIi8+PC9zdmc+" alt="" width="12"> 自転車専用道路・自転車道 (dedicated cycleways)
-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PHJlY3Qgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjOTFjZjYwIi8+PC9zdmc+" alt="" width="12"> 自転車専用通行帯 (cycle lanes)
-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PHJlY3Qgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjZmRhZTYxIi8+PC9zdmc+" alt="" width="12"> 自転車歩行者道 (shared footpaths)
-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PHJlY3Qgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjZDczMDI3Ii8+PC9zdmc+" alt="" width="12"> 車道共有 (shared lanes / sharrow markings)
-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PHJlY3Qgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjQ0M3OUE3Ii8+PC9zdmc+" alt="" width="12"> その他 (crossings, ASLs, separated lines)
-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PHJlY3Qgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjOTY5Njk2Ii8+PC9zdmc+" alt="" width="12"> 自転車専用の走行空間なし (roads without dedicated cycling space)
+- <img src="img/swatch-cycleway.png" alt="" width="12"> 自転車専用道路・自転車道 (dedicated cycleways)
+- <img src="img/swatch-bike-lane.png" alt="" width="12"> 自転車専用通行帯 (cycle lanes)
+- <img src="img/swatch-bicycle-designated.png" alt="" width="12"> 自転車歩行者道 (shared footpaths)
+- <img src="img/swatch-shared-lane.png" alt="" width="12"> 車道共有 (shared lanes / sharrow markings)
+- <img src="img/swatch-other.png" alt="" width="12"> その他 (crossings, ASLs, separated lines)
+- <img src="img/swatch-no-cycleway.png" alt="" width="12"> 自転車専用の走行空間なし (roads without dedicated cycling space)
 
 ## Data Flow
 
