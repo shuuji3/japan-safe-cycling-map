@@ -173,7 +173,13 @@ code {
 
 .github-link {
   display: flex;
+  align-items: center;
   justify-content: end;
+  gap: 0.5rem;
+}
+
+.source-label {
+  white-space: nowrap;
 }
 
 .lang-toggle {
@@ -230,10 +236,52 @@ code {
   color: #333;
 }
 
-.github-icon {
+.github-icon,
+.tangled-icon {
   width: 1.25rem;
   height: 1.25rem;
   flex: none;
+}
+
+.source-link-label {
+  text-decoration: underline;
+}
+
+.about-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.about-heading {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.about-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.about-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.about-value {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.about-divider {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 0;
 }
 
 .note-popover {
@@ -544,6 +592,13 @@ code {
 
   .mobilenav-panel .legend-head {
     display: none;
+  }
+
+  /* About panel in the bottom-nav "情報" view. */
+  .mobilenav-panel .about-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   /* Reserve space for the fixed nav bar so the map never extends underneath it:

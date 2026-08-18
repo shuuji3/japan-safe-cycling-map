@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLingui } from "@lingui/react";
 import { t } from "@lingui/macro";
-import { Basemap } from "./basemap";
+import { AboutPanel } from "./AboutPanel";
 import { BikeLegend } from "./BikeLegend";
 import { SearchBox } from "./SearchBox";
 
-type Tab = "search" | "legend" | null;
+type Tab = "search" | "legend" | "about" | null;
 
 interface MobileNavProps {
-  mode: Basemap;
-  onBasemapToggle: (mode: Basemap) => void;
   onSelect: (coords: [number, number]) => void;
   onToggle: (id: string, checked: boolean) => void;
   visible: Record<string, boolean>;
@@ -32,12 +30,11 @@ function useMediaQuery(query: string): boolean {
 }
 
 // Consolidated mobile layout: a fixed bottom nav bar with three actions
-// (search / categories / basemap). Search and categories expand inline above
-// the bar; the basemap tab just toggles 地図 <-> 航空写真. Desktop keeps the
-// original floating search box and side legend, so nothing changes there.
+// (search / categories / about). Search and categories expand inline above
+// the bar; about shows a compact panel with source links and the language
+// switcher. Desktop keeps the original floating search box and side legend,
+// so nothing changes there.
 export function MobileNav({
-  mode,
-  onBasemapToggle,
   onSelect,
   onToggle,
   visible,
@@ -45,10 +42,10 @@ export function MobileNav({
   onLegendToggle,
 }: MobileNavProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  useLingui();
+  const { i18n } = useLingui();
+  const locale = i18n.locale;
   const [activeTab, setActiveTab] = useState<Tab>(null);
   const [open, setOpen] = useState(false);
-  const isAerial = mode === "aerial";
 
   const selectTab = (next: Exclude<Tab, null>) => {
     if (open && activeTab === next) {
@@ -90,7 +87,11 @@ export function MobileNav({
             onToggle={onToggle}
             open={true}
             handleOpen={() => {}}
+            showFooter={false}
           />
+        )}
+        {activeTab === "about" && (
+          <AboutPanel locale={locale} onSwitch={(l) => i18n.activate(l)} />
         )}
       </div>
       <nav className="mobilenav">
@@ -116,12 +117,13 @@ export function MobileNav({
         </button>
         <button
           type="button"
-          onClick={() => onBasemapToggle(isAerial ? "map" : "aerial")}
+          className={open && activeTab === "about" ? "active" : ""}
+          onClick={() => selectTab("about")}
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z" />
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
           </svg>
-          <span>{isAerial ? t`地図` : t`航空写真`}</span>
+          <span>{t`情報`}</span>
         </button>
       </nav>
     </>
