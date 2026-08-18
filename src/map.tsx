@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLingui } from "@lingui/react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./App.css";
@@ -12,12 +13,13 @@ import {
   setRouteNetworkVisible,
 } from "./bike";
 import { featurePopover } from "./featureInfo";
-import { applyBasemap, Basemap } from "./basemap";
+import { applyBasemap, Basemap, refreshAttribution } from "./basemap";
 import { LayerSwitcher } from "./LayerSwitcher";
 import { MobileNav } from "./MobileNav";
 maplibregl.workerUrl = "/maplibre-gl-csp-worker.js";
 
 function MapComponent() {
+  const { i18n } = useLingui();
   const mapContainer = React.useRef<HTMLDivElement>(null);
   const mapRef = React.useRef<maplibregl.Map | null>(null);
 
@@ -183,6 +185,13 @@ function MapComponent() {
     }
   }, [basemap]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && map.isStyleLoaded()) {
+      refreshAttribution(map);
+    }
+  }, [i18n.locale]);
+
   return (
     <div>
       <MobileNav
@@ -193,8 +202,6 @@ function MapComponent() {
         onSelect={(coords) =>
           mapRef.current?.flyTo({ center: coords, zoom: 13 })
         }
-        mode={basemap}
-        onBasemapToggle={setBasemap}
         legendOpen={legendOpen}
         onLegendToggle={() => setLegendOpen((v) => !v)}
       />

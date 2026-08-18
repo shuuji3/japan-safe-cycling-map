@@ -1,3 +1,4 @@
+import { i18n } from "@lingui/core";
 import maplibregl from "maplibre-gl";
 
 export type Basemap = "map" | "aerial";
@@ -9,15 +10,17 @@ export const GSI_SOURCE = "gsi-seamlessphoto";
 export const GSI_LAYER = "gsi-seamlessphoto";
 export const GSI_URL =
   "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg";
+export const GSI_DEVELOP_PAGE = "https://maps.gsi.go.jp/development/ichiran.html";
 
-// Required 国土地理院 (GSI) citation for シームレス空中写真, attached to the
-// raster source so MapLibre's attribution control shows it when aerial is on.
-// The "加工" wording is required because we overlay Protomaps labels/POIs on top.
-export const GSI_ATTRIBUTION = [
-  "写真は国土地理院(https://maps.gsi.go.jp/development/ichiran.html)の地理院タイル（シームレス空中写真）を加工して作成",
-  "データソース：Landsat8画像（GSI,TSIC,GEO Grid/AIST）, Landsat8画像（courtesy of the U.S. Geological Survey）, 海底地形（GEBCO）",
-  "GRUS画像（© Axelspace）",
-].join(" ");
+// Localized GSI citation for シームレス空中写真, attached to the raster source
+// so MapLibre's attribution control shows it when aerial is on. 加工 is NOT
+// claimed: the imagery is shown as-is and only overlaid with app data.
+function gsiAttribution(): string {
+  if (i18n.locale === "en") {
+    return `GSI seamless aerial photos (<a href="${GSI_DEVELOP_PAGE}">国土地理院</a>). Data sources: Landsat8, bathymetry (GEBCO), GRUS (© Axelspace), USGS`;
+  }
+  return `国土地理院シームレス空中写真（<a href="${GSI_DEVELOP_PAGE}">国土地理院</a>） データソース：Landsat8・海底地形（GEBCO）・GRUS（© Axelspace）・USGS`;
+}
 // Symbol layers omitted from the aerial hybrid (house numbers, road-arrow icons).
 const HIDE_IF_SYMBOL = new Set(["address_label", "roads_oneway"]);
 // Keep the lines (roads/water/rail/boundaries) but semi-transparent so the
@@ -108,7 +111,7 @@ function ensureSatellite(map: maplibregl.Map): void {
     tiles: [GSI_URL],
     tileSize: 256,
     maxzoom: 18,
-    attribution: GSI_ATTRIBUTION,
+    attribution: gsiAttribution(),
   } as any);
   // Insert at the very bottom (above background, below every Protomaps layer).
   map.addLayer(
@@ -124,6 +127,17 @@ function removeSatellite(map: maplibregl.Map): void {
   if (map.getSource(GSI_SOURCE)) {
     map.removeSource(GSI_SOURCE);
   }
+}
+
+// Rebuild the satellite with the current locale's citation. No-op when aerial
+// is off (source absent). Locale changes are rare, so remove-and-recreate is
+// simpler than mutating attribution in place (MapLibre types expose no setter).
+export function refreshAttribution(map: maplibregl.Map): void {
+  if (!map.getSource(GSI_SOURCE)) {
+    return;
+  }
+  removeSatellite(map);
+  ensureSatellite(map);
 }
 
 export function applyBasemap(map: maplibregl.Map, mode: Basemap): void {
