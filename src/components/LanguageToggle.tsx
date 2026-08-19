@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Props {
   locale: string;
   onSwitch: (locale: string) => void;

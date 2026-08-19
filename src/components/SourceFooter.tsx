@@ -1,7 +1,6 @@
-import React from "react";
-import { Trans } from "@lingui/macro";
-import { LanguageToggle } from "./LanguageToggle";
-import { SourceLinks } from "./SourceLinks";
+import { Trans } from '@lingui/react/macro'
+import { LanguageToggle } from './LanguageToggle'
+import { SourceLinks } from './SourceLinks'
 
 interface Props {
   locale: string;

@@ -1,28 +1,28 @@
-import maplibregl from "maplibre-gl";
-import { t } from "@lingui/macro";
+import { t } from '@lingui/core/macro'
+import { type LngLat, Map as MapLibreMap, Popup } from 'maplibre-gl'
 
 interface Link {
-  label: string;
-  href: string;
+  label: string
+  href: string
 }
 
 function escapeHtml(v: string): string {
   return v
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
 }
 
 function buildLinks(
   lat: number,
   lng: number,
   osmId: string,
-  type: "way" | "relation" | "node",
+  type: 'way' | 'relation' | 'node',
   zoom: number,
 ): Link[] {
-  const z = Math.round(zoom);
-  const idParam = type === "node" ? `n` : type === "relation" ? `r` : `w`;
+  const z = Math.round(zoom)
+  const idParam = type === 'node' ? `n` : type === 'relation' ? `r` : `w`
   return [
     {
       label: t`Street View`,
@@ -40,34 +40,34 @@ function buildLinks(
         ? `https://rapideditor.org/edit#map=${z}/${lat}/${lng}&id=${idParam}${osmId}`
         : `https://rapideditor.org/edit#map=${z}/${lat}/${lng}`,
     },
-  ];
+  ]
 }
 
 export function featurePopover(
-  map: maplibregl.Map,
-  lngLat: maplibregl.LngLat,
+  map: MapLibreMap,
+  lngLat: LngLat,
   props: Record<string, any>,
-  type: "way" | "relation" | "node",
-): maplibregl.Popup {
-  const rows = Object.entries(props).filter(([k]) => k !== "osm_id");
-  const osmId = String(props.osm_id ?? "");
+  type: 'way' | 'relation' | 'node',
+): Popup {
+  const rows = Object.entries(props).filter(([k]) => k !== 'osm_id')
+  const osmId = String(props.osm_id ?? '')
   const title =
-    (props.name as string) || (props["class"] as string) || t`ルート情報`;
-  const links = buildLinks(lngLat.lat, lngLat.lng, osmId, type, map.getZoom());
+    (props.name as string) || (props['class'] as string) || t`ルート情報`
+  const links = buildLinks(lngLat.lat, lngLat.lng, osmId, type, map.getZoom())
 
   const linkHtml = links
     .map(
       (l) =>
         `<a class="info-link" href="${l.href}" target="_blank" rel="noopener noreferrer"><span class="info-link-label">${escapeHtml(l.label)}</span></a>`,
     )
-    .join("");
+    .join('')
 
   const table = rows
     .map(
       ([k, v]) =>
         `<tr><td class="info-key">${escapeHtml(k)}</td><td class="info-val">${escapeHtml(String(v))}</td></tr>`,
     )
-    .join("");
+    .join('')
 
   const html = `
     <div class="feature-info">
@@ -76,18 +76,18 @@ export function featurePopover(
         <button type="button" class="info-close" aria-label="${t`閉じる`}">×</button>
       </div>
       <table class="info-table">
-        ${table || '<tr><td class="info-val">' + t`（データなし）` + "</td></tr>"}
+        ${table || '<tr><td class="info-val">' + t`（データなし）` + '</td></tr>'}
       </table>
       <div class="info-links" aria-label="${t`外部リンク`}">${linkHtml}</div>
-    </div>`;
+    </div>`
 
-  const popup = new maplibregl.Popup({
+  const popup = new Popup({
     closeButton: false,
     closeOnClick: false,
-    maxWidth: "300px",
-  });
-  popup.setLngLat(lngLat).setHTML(html).addTo(map);
-  const closeBtn = popup.getElement().querySelector(".info-close");
-  closeBtn?.addEventListener("click", () => popup.remove());
-  return popup;
+    maxWidth: '300px',
+  })
+  popup.setLngLat(lngLat).setHTML(html).addTo(map)
+  const closeBtn = popup.getElement().querySelector('.info-close')
+  closeBtn?.addEventListener('click', () => popup.remove())
+  return popup
 }

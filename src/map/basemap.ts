@@ -1,5 +1,5 @@
-import { i18n } from "@lingui/core";
-import maplibregl from "maplibre-gl";
+import { i18n } from '@lingui/core'
+import { type Map as MapLibreMap } from 'maplibre-gl'
 
 export type Basemap = "map" | "aerial";
 
@@ -34,7 +34,7 @@ function lineOpacityFor(id: string): number {
   return /highway|major/.test(id) ? MAJOR_LINE_OPACITY : MINOR_LINE_OPACITY;
 }
 
-function isProtomapsLayer(map: maplibregl.Map, id: string): boolean {
+function isProtomapsLayer(map: MapLibreMap, id: string): boolean {
   const l = map.getLayer(id);
   return !!l && (l as any).source === PM_SOURCE;
 }
@@ -42,12 +42,12 @@ function isProtomapsLayer(map: maplibregl.Map, id: string): boolean {
 // Id of the layer to insert the satellite *under*: the first non-background
 // layer, i.e. at the very bottom of the style. Roads/lines/labels then paint on
 // top of the photo (hybrid), which is what the aerial mode needs.
-function bottomAnchorId(map: maplibregl.Map): string | undefined {
+function bottomAnchorId(map: MapLibreMap): string | undefined {
   const first = map.getStyle().layers.find((l) => l.id !== "background");
   return first ? first.id : undefined;
 }
 
-function setLineOpacity(map: maplibregl.Map, opacityFor: (id: string) => number | undefined): void {
+function setLineOpacity(map: MapLibreMap, opacityFor: (id: string) => number | undefined): void {
   for (const l of map.getStyle().layers) {
     if (!isProtomapsLayer(map, l.id) || l.type !== "line") {
       continue;
@@ -63,7 +63,7 @@ function setLineOpacity(map: maplibregl.Map, opacityFor: (id: string) => number 
 // In aerial mode the satellite sits at the bottom; hide the opaque layers that
 // would cover it (fills/landcover/water/buildings), but KEEP line layers (roads,
 // water, rail, boundaries) and labels so real roads stay findable on the photo.
-function hideOpaqueLayers(map: maplibregl.Map): void {
+function hideOpaqueLayers(map: MapLibreMap): void {
   for (const l of map.getStyle().layers) {
     if (!isProtomapsLayer(map, l.id)) {
       continue;
@@ -89,7 +89,7 @@ function hideOpaqueLayers(map: maplibregl.Map): void {
   }
 }
 
-function showAllLayers(map: maplibregl.Map): void {
+function showAllLayers(map: MapLibreMap): void {
   for (const l of map.getStyle().layers) {
     if (!isProtomapsLayer(map, l.id)) {
       continue;
@@ -102,7 +102,7 @@ function showAllLayers(map: maplibregl.Map): void {
   }
 }
 
-function ensureSatellite(map: maplibregl.Map): void {
+function ensureSatellite(map: MapLibreMap): void {
   if (map.getSource(GSI_SOURCE)) {
     return;
   }
@@ -120,7 +120,7 @@ function ensureSatellite(map: maplibregl.Map): void {
   );
 }
 
-function removeSatellite(map: maplibregl.Map): void {
+function removeSatellite(map: MapLibreMap): void {
   if (map.getLayer(GSI_LAYER)) {
     map.removeLayer(GSI_LAYER);
   }
@@ -132,7 +132,7 @@ function removeSatellite(map: maplibregl.Map): void {
 // Rebuild the satellite with the current locale's citation. No-op when aerial
 // is off (source absent). Locale changes are rare, so remove-and-recreate is
 // simpler than mutating attribution in place (MapLibre types expose no setter).
-export function refreshAttribution(map: maplibregl.Map): void {
+export function refreshAttribution(map: MapLibreMap): void {
   if (!map.getSource(GSI_SOURCE)) {
     return;
   }
@@ -140,7 +140,7 @@ export function refreshAttribution(map: maplibregl.Map): void {
   ensureSatellite(map);
 }
 
-export function applyBasemap(map: maplibregl.Map, mode: Basemap): void {
+export function applyBasemap(map: MapLibreMap, mode: Basemap): void {
   if (mode === "aerial") {
     ensureSatellite(map);
     hideOpaqueLayers(map);

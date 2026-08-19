@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useLingui } from "@lingui/react";
-import { t } from "@lingui/macro";
-import { AboutPanel } from "./AboutPanel";
-import { BikeLegend } from "./BikeLegend";
-import { SearchBox } from "./SearchBox";
+import { useEffect, useState } from 'react'
+import { useLingui } from '@lingui/react'
+import { t } from '@lingui/core/macro'
+import { AboutPanel } from './AboutPanel'
+import { BikeLegend } from './BikeLegend'
+import { SearchBox } from './SearchBox'
 
 type Tab = "search" | "legend" | "about" | null;
 

@@ -1,7 +1,7 @@
-import maplibregl from "maplibre-gl";
-import { Protocol } from "pmtiles";
-import { defineMessage } from "@lingui/macro";
-import { MessageDescriptor } from "@lingui/core";
+import { addProtocol, type Map as MapLibreMap } from 'maplibre-gl'
+import { Protocol } from 'pmtiles'
+import { defineMessage } from '@lingui/core/macro'
+import { MessageDescriptor } from '@lingui/core'
 
 /** one OSM attribute shown in the popover, with its own plain-language meaning */
 export interface BikeAttr {
@@ -139,20 +139,20 @@ function ensureProtocol(): void {
     // maplibre-gl v2 uses callback-style addProtocol; pmtiles Protocol.tile
     // detects the second argument and returns a { cancel } handle accordingly.
     const protocol = new Protocol();
-    maplibregl.addProtocol("pmtiles", protocol.tile);
+    addProtocol("pmtiles", protocol.tile);
   }
 }
 
 function sourceUrl(): string {
-  const external = process.env.REACT_APP_BIKE_PMTILES_URL;
+  const external = import.meta.env.VITE_BIKE_PMTILES_URL
   if (external) {
-    return "pmtiles://" + external;
+    return 'pmtiles://' + external
   }
   // Static host: build an absolute URL from /bike.pmtiles
-  return "pmtiles://" + window.location.origin + "/bike.pmtiles";
+  return 'pmtiles://' + window.location.origin + '/bike.pmtiles'
 }
 
-export function initBikeLayers(map: maplibregl.Map): void {
+export function initBikeLayers(map: MapLibreMap): void {
   ensureProtocol();
   if (!inBrowser || map.getSource(SOURCE_ID)) {
     return;
@@ -249,14 +249,14 @@ export function initBikeLayers(map: maplibregl.Map): void {
   }
 }
 
-export function setBikeClassVisible(map: maplibregl.Map, cls: string, visible: boolean): void {
+export function setBikeClassVisible(map: MapLibreMap, cls: string, visible: boolean): void {
   const id = LAYER_PREFIX + cls;
   if (map.getLayer(id)) {
     map.setLayoutProperty(id, "visibility", visible ? "visible" : "none");
   }
 }
 
-export function setRouteNetworkVisible(map: maplibregl.Map, net: string, visible: boolean): void {
+export function setRouteNetworkVisible(map: MapLibreMap, net: string, visible: boolean): void {
   const id = ROUTE_PREFIX + net;
   if (map.getLayer(id)) {
     map.setLayoutProperty(id, "visibility", visible ? "visible" : "none");

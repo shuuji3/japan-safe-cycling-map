@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLingui } from "@lingui/react";
-import { Trans, t } from "@lingui/macro";
-import { BIKE_CLASSES } from "./bike";
-import { SourceFooter } from "./SourceFooter";
+import React, { useEffect, useRef, useState } from 'react'
+import { useLingui } from '@lingui/react'
+import { Trans } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
+import { BIKE_CLASSES } from '../data/bike'
+import { SourceFooter } from './SourceFooter'
 
 interface Props {
   visible: Record<string, boolean>;

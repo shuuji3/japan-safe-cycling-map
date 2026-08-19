@@ -13,68 +13,73 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/featureInfo.ts:32
-msgid "OSMエディタ"
-msgstr "OSMエディタ"
+#: src/map/featureInfo.ts:79
+msgid "（データなし）"
+msgstr "（データなし）"
 
-#: src/featureInfo.ts:38
-msgid "Rapid"
-msgstr "Rapid"
-
-#: src/featureInfo.ts:28
-msgid "Street View"
-msgstr "Street View"
-
-#: src/BikeLegend.tsx:152
+#. placeholder {0}: i18n._(def.name)
+#: src/components/BikeLegend.tsx:153
 msgid "{0}が表示しているOSMタグ"
 msgstr "{0}が表示しているOSMタグ"
 
-#: src/bike.ts:44
+#: src/data/bike.ts:44
 msgid "「普通自転車専用通行帯」標識や路面表示により、車道上にペイント等で指定された通行帯"
 msgstr "「普通自転車専用通行帯」標識や路面表示により、車道上にペイント等で指定された通行帯"
 
-#: src/bike.ts:53
+#: src/data/bike.ts:53
 msgid "「自転車及び歩行者専用」標識や「普通自転車歩道通行可」指定のある歩道（歩行者優先）"
 msgstr "「自転車及び歩行者専用」標識や「普通自転車歩道通行可」指定のある歩道（歩行者優先）"
 
-#: src/bike.ts:35
+#: src/data/bike.ts:35
 msgid "「自転車専用」標識がある独立した自転車専用道路（歩行者通行不可）"
 msgstr "「自転車専用」標識がある独立した自転車専用道路（歩行者通行不可）"
 
-#: src/bike.ts:33
+#: src/data/bike.ts:33
 msgid "「自転車専用」標識がある道路、または車道沿いに構造物で分離された自転車道"
 msgstr "「自転車専用」標識がある道路、または車道沿いに構造物で分離された自転車道"
 
-#: src/AboutPanel.tsx:15
-msgid "このアプリについて"
-msgstr "このアプリについて"
+#: src/map/featureInfo.ts:32
+msgid "OSMエディタ"
+msgstr "OSMエディタ"
 
-#: src/BikeLegend.tsx:179
-msgid "このレイヤーが表示しているOSMタグ"
-msgstr "このレイヤーが表示しているOSMタグ"
+#: src/map/featureInfo.ts:38
+msgid "Rapid"
+msgstr "Rapid"
 
-#: src/bike.ts:85
-msgid "この道路に自転車の走行空間がないことを明示。なお、片側のみの場合は反対側の走行空間に応じて分類され、両側が対象の場合のみ本カテゴリー"
-msgstr "この道路に自転車の走行空間がないことを明示。なお、片側のみの場合は反対側の走行空間に応じて分類され、両側が対象の場合のみ本カテゴリー"
+#: src/map/featureInfo.ts:28
+msgid "Street View"
+msgstr "Street View"
 
-#: src/bike.ts:83
-msgid "この道路に自転車レーン・自転車道・ナビライン等の走行空間がない道路"
-msgstr "この道路に自転車レーン・自転車道・ナビライン等の走行空間がない道路"
-
-#: src/bike.ts:71
-msgid "その他（付帯設備・属性）"
-msgstr "その他（付帯設備・属性）"
-
-#: src/MobileNav.tsx:116
+#: src/components/MobileNav.tsx:116
 msgid "カテゴリー"
 msgstr "カテゴリー"
 
-#: src/AboutPanel.tsx:19
-#: src/SourceFooter.tsx:18
+#: src/components/AboutPanel.tsx:14
+msgid "このアプリについて"
+msgstr "このアプリについて"
+
+#: src/components/BikeLegend.tsx:180
+msgid "このレイヤーが表示しているOSMタグ"
+msgstr "このレイヤーが表示しているOSMタグ"
+
+#: src/data/bike.ts:85
+msgid "この道路に自転車の走行空間がないことを明示。なお、片側のみの場合は反対側の走行空間に応じて分類され、両側が対象の場合のみ本カテゴリー"
+msgstr "この道路に自転車の走行空間がないことを明示。なお、片側のみの場合は反対側の走行空間に応じて分類され、両側が対象の場合のみ本カテゴリー"
+
+#: src/data/bike.ts:83
+msgid "この道路に自転車レーン・自転車道・ナビライン等の走行空間がない道路"
+msgstr "この道路に自転車レーン・自転車道・ナビライン等の走行空間がない道路"
+
+#: src/components/AboutPanel.tsx:18
+#: src/components/SourceFooter.tsx:17
 msgid "ソースコード"
 msgstr "ソースコード"
 
-#: src/bike.ts:107
+#: src/data/bike.ts:71
+msgid "その他（付帯設備・属性）"
+msgstr "その他（付帯設備・属性）"
+
+#: src/data/bike.ts:107
 msgid "ナショナルサイクルルート"
 msgstr "ナショナルサイクルルート"
 
@@ -82,163 +87,159 @@ msgstr "ナショナルサイクルルート"
 #~ msgid "メニュー"
 #~ msgstr "メニュー"
 
-#: src/bike.ts:114
+#: src/data/bike.ts:114
 msgid "リージョナルサイクルルート"
 msgstr "リージョナルサイクルルート"
 
-#: src/featureInfo.ts:55
+#: src/map/featureInfo.ts:55
 msgid "ルート情報"
 msgstr "ルート情報"
 
-#: src/bike.ts:121
+#: src/data/bike.ts:121
 msgid "ローカルサイクルルート"
 msgstr "ローカルサイクルルート"
 
-#: src/bike.ts:76
+#: src/data/bike.ts:76
 msgid "交差点手前の自転車用優先停止スペース（Advanced Stop Line）"
 msgstr "交差点手前の自転車用優先停止スペース（Advanced Stop Line）"
 
-#: src/bike.ts:74
+#: src/data/bike.ts:74
 msgid "交差点等の自転車横断帯"
 msgstr "交差点等の自転車横断帯"
 
-#: src/bike.ts:72
+#: src/data/bike.ts:72
 msgid "交差点設備や、自転車道が車道とは別ラインで描かれている場合などの補足属性"
 msgstr "交差点設備や、自転車道が車道とは別ラインで描かれている場合などの補足属性"
 
-#: src/bike.ts:108
+#: src/data/bike.ts:108
 msgid "国内の主要なルート"
 msgstr "国内の主要なルート"
 
-#: src/bike.ts:101
+#: src/data/bike.ts:101
 msgid "国境を越える国際ルート"
 msgstr "国境を越える国際ルート"
 
-#: src/bike.ts:109
+#: src/data/bike.ts:109
 msgid "国家サイクルネットワーク"
 msgstr "国家サイクルネットワーク"
 
-#: src/bike.ts:102
+#: src/data/bike.ts:102
 msgid "国際サイクルネットワーク"
 msgstr "国際サイクルネットワーク"
 
-#: src/bike.ts:100
+#: src/data/bike.ts:100
 msgid "国際サイクルルート"
 msgstr "国際サイクルルート"
 
-#: src/bike.ts:122
+#: src/data/bike.ts:122
 msgid "地元のルート"
 msgstr "地元のルート"
 
-#: src/LayerSwitcher.tsx:14
+#: src/components/LayerSwitcher.tsx:13
 msgid "地図"
 msgstr "地図"
 
-#: src/LayerSwitcher.tsx:23
+#: src/components/LayerSwitcher.tsx:22
 msgid "地図に切り替え"
 msgstr "地図に切り替え"
 
-#: src/bike.ts:115
-msgid "地域をまたぐルート"
-msgstr "地域をまたぐルート"
-
-#: src/bike.ts:116
+#: src/data/bike.ts:116
 msgid "地域サイクルネットワーク"
 msgstr "地域サイクルネットワーク"
 
-#: src/bike.ts:123
+#: src/data/bike.ts:115
+msgid "地域をまたぐルート"
+msgstr "地域をまたぐルート"
+
+#: src/data/bike.ts:123
 msgid "地方サイクルネットワーク"
 msgstr "地方サイクルネットワーク"
 
-#: src/SearchBox.tsx:106
+#: src/components/SearchBox.tsx:106
 msgid "場所を検索"
 msgstr "場所を検索"
 
-#: src/featureInfo.ts:81
+#: src/map/featureInfo.ts:81
 msgid "外部リンク"
 msgstr "外部リンク"
 
-#: src/bike.ts:63
+#: src/data/bike.ts:63
 msgid "専用通行帯はなく車道を自動車と共有する区間。矢羽根型表示（ナビライン）等で走行位置を提示"
 msgstr "専用通行帯はなく車道を自動車と共有する区間。矢羽根型表示（ナビライン）等で走行位置を提示"
 
-#: src/MobileNav.tsx:126
+#: src/components/MobileNav.tsx:126
 msgid "情報"
 msgstr "情報"
 
-#: src/bike.ts:55
+#: src/data/bike.ts:55
 msgid "指定標識等により自転車の通行が許可・指定された歩道"
 msgstr "指定標識等により自転車の通行が許可・指定された歩道"
 
-#: src/MobileNav.tsx:106
+#: src/components/MobileNav.tsx:106
 msgid "検索"
 msgstr "検索"
 
-#: src/bike.ts:65
+#: src/data/bike.ts:65
 msgid "矢羽根型表示（ナビマーク・ナビライン）がある車道共有区間"
 msgstr "矢羽根型表示（ナビマーク・ナビライン）がある車道共有区間"
 
-#: src/bike.ts:56
+#: src/data/bike.ts:56
 msgid "自転車の通行が指定されている道路・通行区分"
 msgstr "自転車の通行が指定されている道路・通行区分"
 
-#: src/bike.ts:82
+#: src/data/bike.ts:82
 msgid "自転車専用の走行空間なし"
 msgstr "自転車専用の走行空間なし"
 
-#: src/bike.ts:43
+#: src/data/bike.ts:43
 msgid "自転車専用通行帯（自転車レーン）"
 msgstr "自転車専用通行帯（自転車レーン）"
 
-#: src/bike.ts:32
+#: src/data/bike.ts:32
 msgid "自転車専用道路・自転車道"
 msgstr "自転車専用道路・自転車道"
 
-#: src/bike.ts:52
+#: src/data/bike.ts:52
 msgid "自転車歩行者道（自歩道）"
 msgstr "自転車歩行者道（自歩道）"
 
-#: src/bike.ts:75
+#: src/data/bike.ts:75
 msgid "自転車道が車道本体とは別の独立したライン（ウェイ）として作成済み"
 msgstr "自転車道が車道本体とは別の独立したライン（ウェイ）として作成済み"
 
-#: src/BikeLegend.tsx:102
+#: src/components/BikeLegend.tsx:103
 msgid "自転車道のカテゴリー"
 msgstr "自転車道のカテゴリー"
 
-#: src/LayerSwitcher.tsx:14
+#: src/components/LayerSwitcher.tsx:13
 msgid "航空写真"
 msgstr "航空写真"
 
-#: src/LayerSwitcher.tsx:23
+#: src/components/LayerSwitcher.tsx:22
 msgid "航空写真に切り替え"
 msgstr "航空写真に切り替え"
 
-#: src/AboutPanel.tsx:28
+#: src/components/AboutPanel.tsx:27
 msgid "言語"
 msgstr "言語"
 
-#: src/bike.ts:46
+#: src/data/bike.ts:46
 msgid "車道上に区画線やカラー塗装で設けられた自転車専用通行帯（自転車レーン）"
 msgstr "車道上に区画線やカラー塗装で設けられた自転車専用通行帯（自転車レーン）"
 
-#: src/bike.ts:62
+#: src/data/bike.ts:62
 msgid "車道共有（矢羽根・ナビマーク）"
 msgstr "車道共有（矢羽根・ナビマーク）"
 
-#: src/bike.ts:36
+#: src/data/bike.ts:36
 msgid "車道沿いに縁石や柵などの構造物で分離された自転車道"
 msgstr "車道沿いに縁石や柵などの構造物で分離された自転車道"
 
-#: src/BikeLegend.tsx:106
-#: src/featureInfo.ts:76
+#: src/components/BikeLegend.tsx:107
+#: src/map/featureInfo.ts:76
 msgid "閉じる"
 msgstr "閉じる"
 
-#: src/BikeLegend.tsx:106
+#: src/components/BikeLegend.tsx:107
 msgid "開く"
 msgstr "開く"
-
-#: src/featureInfo.ts:79
-msgid "（データなし）"
-msgstr "（データなし）"

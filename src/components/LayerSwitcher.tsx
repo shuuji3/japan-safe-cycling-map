@@ -1,7 +1,6 @@
-import React from 'react'
 import { useLingui } from '@lingui/react'
-import { t } from '@lingui/macro'
-import { Basemap } from './basemap'
+import { t } from '@lingui/core/macro'
+import { Basemap } from '../map/basemap'
 
 interface LayerSwitcherProps {
   mode: Basemap;
@@ -14,8 +13,8 @@ export function LayerSwitcher({ mode, onToggle }: LayerSwitcherProps) {
   const label = isAerial ? t`地図` : t`航空写真`
   const thumb =
     isAerial
-      ? `${process.env.PUBLIC_URL}/map-thumb.png`
-      : `${process.env.PUBLIC_URL}/aerial-thumb.png`
+      ? `${import.meta.env.BASE_URL}map-thumb.png`
+      : `${import.meta.env.BASE_URL}aerial-thumb.png`
   return (
     <button
       type="button"
