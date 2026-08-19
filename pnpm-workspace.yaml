@@ -1,5 +1,8 @@
+allowBuilds:
+  '@swc/core': true
 minimumReleaseAgeExclude:
   - maplibre-gl@6.4.1
 overrides:
+  '@swc/core': 1.15.47
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: 4.1.10

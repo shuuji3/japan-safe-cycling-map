@@ -1,16 +1,15 @@
 import { defineConfig } from 'vite-plus'
-import react from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
-import { lingui, linguiTransformerBabelPreset } from '@lingui/vite-plugin'
+import react from '@vitejs/plugin-react-swc'
+import { lingui } from '@lingui/vite-plugin'
+import { linguiMacroSwcPlugin } from '@lingui/swc-plugin/options'
 
 export default defineConfig({
   base: './',
   plugins: [
-    react(),
-    lingui(),
-    babel({
-      presets: [linguiTransformerBabelPreset()],
+    react({
+      plugins: [linguiMacroSwcPlugin()],
     }),
+    lingui(),
   ],
   build: {
     outDir: 'dist',
