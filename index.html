@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
@@ -18,7 +18,7 @@
     <meta property="og:image" content="https://japan-safe-cycling-map.shuuji3.xyz/screenshot-map.png" />
     <meta name="author" content="TAKAHASHI Shuuji">
     <meta name="keywords" content="maps,vectormaps,cycling,geospatial,openstreetmap,mapbox,typescript,rust,tfnsw,active transport,urbanism">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <title>Japan Safe Cycling Map</title>
     <script defer src="https://umami.shuuji3.xyz/script.js" data-website-id="8b50dcd7-e5f5-4e81-8126-84f64086ee41"></script>
   </head>
@@ -29,10 +29,11 @@
       <span class="t-moderate">Cycling</span>
       <span class="t-dangerous">
         Map.
-        <img src="favicon.svg" alt="" class="logo-image" aria-hidden="true" />
+        <img src="./favicon.svg" alt="" class="logo-image" aria-hidden="true" />
       </span>
     </h1>
     <noscript>Please enable JavaScript to run this app because the map rendering and data overlay require the client-side processing!</noscript>
     <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
