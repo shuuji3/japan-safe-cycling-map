@@ -28,21 +28,25 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version-file: .nvmrc
-          cache: npm
+          node-version-file: .node-version
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         env:
-          REACT_APP_BIKE_PMTILES_URL: https://storage.japan-safe-cycling-map.shuuji3.xyz/bike.pmtiles
-        run: npm run build
+          VITE_BIKE_PMTILES_URL: https://storage.japan-safe-cycling-map.shuuji3.xyz/bike.pmtiles
+        run: pnpm build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: build
+          path: dist
 
   deploy:
     needs: build
