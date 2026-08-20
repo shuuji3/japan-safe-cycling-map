@@ -68,15 +68,15 @@ flowchart TB
 
 ```shell
 mise install
-npm i --legacy-peer-deps
-npm run start  # dev server at http://localhost:5000
+pnpm i
+pnpm dev
 ```
 
 Rebuild the bike tiles (re-checks updated OSM, resolves routes, runs
 Planetiler):
 
 ```shell
-npm run update-bike-data
+pnpm update-bike-data
 ```
 
 ## Deploy
