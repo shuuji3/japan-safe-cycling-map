@@ -12,7 +12,8 @@
     "fmt": "vp fmt",
     "test": "vp test",
     "i18n:extract": "lingui extract",
-    "i18n:compile": "lingui compile"
+    "i18n:compile": "lingui compile",
+    "update-bike-data": "make"
   },
   "dependencies": {
     "@lingui/core": "^6.6.0",
