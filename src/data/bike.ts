@@ -144,12 +144,12 @@ function ensureProtocol(): void {
 }
 
 function sourceUrl(): string {
-  const external = import.meta.env.VITE_BIKE_PMTILES_URL
+  const external = import.meta.env.VITE_BICYCLE_ROADS_PMTILES_URL
   if (external) {
     return 'pmtiles://' + external
   }
-  // Static host: build an absolute URL from /bike.pmtiles
-  return 'pmtiles://' + window.location.origin + '/bike.pmtiles'
+  // Static host: build an absolute URL from /bicycle-roads.pmtiles
+  return 'pmtiles://' + window.location.origin + '/bicycle-roads.pmtiles'
 }
 
 export function initBikeLayers(map: MapLibreMap): void {

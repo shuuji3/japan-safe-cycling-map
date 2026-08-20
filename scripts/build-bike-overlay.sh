@@ -12,7 +12,7 @@ PLANETILER_JAR=".cache/planetiler.jar"
 OSM_PATH=".cache/japan.osm.pbf"
 OSM_URL="https://download.geofabrik.de/asia/japan-latest.osm.pbf"
 ROUTES_GEOJSON=".cache/route_networks.geojson"
-OUTPUT="public/bike.pmtiles"
+OUTPUT="public/bicycle-roads.pmtiles"
 MINZOOM="${MINZOOM:-0}"
 MAXZOOM="${MAXZOOM:-16}"
 

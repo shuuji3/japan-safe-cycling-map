@@ -1,6 +1,6 @@
 interface ImportMetaEnv {
   readonly BASE_URL: string
-  readonly VITE_BIKE_PMTILES_URL?: string
+  readonly VITE_BICYCLE_ROADS_PMTILES_URL?: string
 }
 
 interface ImportMeta {

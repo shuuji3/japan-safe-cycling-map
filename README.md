@@ -36,7 +36,7 @@ Legend categories for bake roads in Japan:
 flowchart TB
     A[<code>japan-latest.osm.pbf</code><br/>OSM Japan map data]
     B[<code>route_networks.geojson</code><br/>long-distance bike routes]
-    C[<code>bike.pmtiles</code><br/>finished map tiles]
+    C[<code>bicycle-roads.pmtiles</code><br/>finished map tiles]
     D[cloud storage<br/>files kept online]
     E[web map<br/>shown in the browser]
 
@@ -52,11 +52,11 @@ flowchart TB
    `data/route_networks.geojson` with
    [scripts/generate-route-networks.py](scripts/generate-route-networks.py)
    (pyosmium), since Planetiler can't resolve relations onto member ways.
-3. Build the overlay `public/bike.pmtiles` (z0–z16) with Planetiler via the
+3. Build the overlay `public/bicycle-roads.pmtiles` (z0–z16) with Planetiler via the
    project [`Makefile`](Makefile) (`make`, schema
    [scripts/planetiler-bike-schema.yml](scripts/planetiler-bike-schema.yml)),
    using both the OSM extract and the route GeoJSON as sources.
-4. Upload `public/bike.pmtiles` (>20MB) to the cloud storage from GitHub Actions
+4. Upload `public/bicycle-roads.pmtiles` (>20MB) to the cloud storage from GitHub Actions
    [.github/workflows/publish-bike-tiles.yml](.github/workflows/publish-bike-tiles.yml).
 
 ## Requirements
@@ -84,7 +84,7 @@ npm run update-bike-data
 The bile road tile is published to cloud storage from GitHub Actions
 workflow. The site itself deploys to GitHub Pages on push
 to `feat/japan-safe-cycling-map` branch, reading the bike tile from the cloud storage URL set in
-`VITE_BIKE_PMTILES_URL`.
+`VITE_BICYCLE_ROADS_PMTILES_URL`.
 
 ## Not implemented
 

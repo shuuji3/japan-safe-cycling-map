@@ -7,7 +7,7 @@ OSM_PATH = .cache/japan.osm.pbf
 OSM_URL = https://download.geofabrik.de/asia/japan-latest.osm.pbf
 OSM_UA = japan-safe-cycling-map (https://github.com/shuuji3/japan-safe-cycling-map)
 ROUTES_GEOJSON = .cache/route_networks.geojson
-OUTPUT = public/bike.pmtiles
+OUTPUT = public/bicycle-roads.pmtiles
 MINZOOM ?= 0
 MAXZOOM ?= 16
 

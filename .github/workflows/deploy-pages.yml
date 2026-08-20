@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         env:
-          VITE_BIKE_PMTILES_URL: https://storage.japan-safe-cycling-map.shuuji3.xyz/bike.pmtiles
+          VITE_BICYCLE_ROADS_PMTILES_URL: https://storage.japan-safe-cycling-map.shuuji3.xyz/bicycle-roads.pmtiles
         run: pnpm build
 
       - name: Upload artifact

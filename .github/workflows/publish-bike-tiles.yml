@@ -46,4 +46,4 @@ jobs:
           RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           RCLONE_CONFIG_R2_ENDPOINT: https://${{ vars.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
-        run: rclone copyto public/bike.pmtiles r2:${{ vars.R2_BUCKET }}/bike.pmtiles --s3-no-check-bucket
+        run: rclone copyto public/bicycle-roads.pmtiles r2:${{ vars.R2_BUCKET }}/bicycle-roads.pmtiles --s3-no-check-bucket
