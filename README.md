@@ -1,4 +1,5 @@
 # Japan Safe Cycling Map
+
 Japan-focused cycling roads map built on OpenStreetMap (OSM) data. Inspired
 by [jakecoppinger/safe-cycling-map](https://github.com/jakecoppinger/safe-cycling-map), focused on Japanese road conventions.
 
@@ -17,7 +18,7 @@ Overlays a color-coded bike infrastructure layer on a sharp basemap. Click or
 hover a line to see the actual OSM tags behind it. The street basemap is served
 by [Protomaps](https://protomaps.com). An aerial mode switches to a
 [GSI Japan satellite
-hybrid](https://maps.gsi.go.jp/development/ichiran.html) 
+hybrid](https://maps.gsi.go.jp/development/ichiran.html)
 via the basemap switcher.
 
 Legend categories for bake roads in Japan:

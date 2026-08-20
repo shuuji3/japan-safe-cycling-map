@@ -95,9 +95,7 @@ function MapComponent() {
         }
         const f = features[0]
         popup?.remove()
-        const type = String(f.layer?.id ?? '').startsWith('route-')
-          ? 'relation'
-          : 'way'
+        const type = String(f.layer?.id ?? '').startsWith('route-') ? 'relation' : 'way'
         popup = featurePopover(map, e.lngLat, (f.properties || {}) as any, type)
         pinned = pin
         popup.on('close', () => {
@@ -198,12 +196,8 @@ function MapComponent() {
     <div>
       <MobileNav
         visible={visible}
-        onToggle={(id, checked) =>
-          setVisible((v) => ({ ...v, [id]: checked }))
-        }
-        onSelect={(coords) =>
-          mapRef.current?.flyTo({ center: coords, zoom: 13 })
-        }
+        onToggle={(id, checked) => setVisible((v) => ({ ...v, [id]: checked }))}
+        onSelect={(coords) => mapRef.current?.flyTo({ center: coords, zoom: 13 })}
         legendOpen={legendOpen}
         onLegendToggle={() => setLegendOpen((v) => !v)}
       />

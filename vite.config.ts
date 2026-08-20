@@ -14,4 +14,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
   },
+  fmt: {
+    singleQuote: true,
+    semi: false,
+  },
 })

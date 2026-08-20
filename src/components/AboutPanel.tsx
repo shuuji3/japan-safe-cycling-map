@@ -3,8 +3,8 @@ import { LanguageToggle } from './LanguageToggle'
 import { SourceLinks } from './SourceLinks'
 
 interface Props {
-  locale: string;
-  onSwitch: (locale: string) => void;
+  locale: string
+  onSwitch: (locale: string) => void
 }
 
 export function AboutPanel({ locale, onSwitch }: Props) {
@@ -31,5 +31,5 @@ export function AboutPanel({ locale, onSwitch }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -2,13 +2,9 @@
 name = "japan-safe-cycling-map"
 version = "0.1.0"
 readme = "README.md"
-authors = [
-    { name = "TAKAHASHI Shuuji", email = "id@shuuji3.xyz" }
-]
+authors = [{ name = "TAKAHASHI Shuuji", email = "id@shuuji3.xyz" }]
 requires-python = ">=3.14"
-dependencies = [
-    "osmium>=4.3.1",
-]
+dependencies = ["osmium>=4.3.1"]
 
 [project.scripts]
 safe-cycling-map = "safe_cycling_map:main"

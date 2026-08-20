@@ -1,9 +1,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-feature-settings: 'palt';
 }
 
@@ -13,8 +13,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .map-container {
@@ -378,7 +377,8 @@ code {
   border-radius: 4px;
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
   overflow: hidden;
-}.search-result {
+}
+.search-result {
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;

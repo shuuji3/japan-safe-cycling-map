@@ -47,13 +47,11 @@ h1 {
     margin-inline-start: -1rem;
     margin-block-end: -1.5rem;
     transform: translateY(0);
-
   }
 
   &:hover .logo-image {
     animation: bike-bounce 1s ease-in-out infinite;
   }
-
 
   & .t-safest {
     z-index: 1;

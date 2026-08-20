@@ -1,6 +1,6 @@
 interface Props {
-  locale: string;
-  onSwitch: (locale: string) => void;
+  locale: string
+  onSwitch: (locale: string) => void
 }
 
 // Floating language switcher (日本語 / English). Uses fixed labels so it is
@@ -10,18 +10,18 @@ export function LanguageToggle({ locale, onSwitch }: Props) {
     <div className="lang-toggle" role="group" aria-label="language">
       <button
         type="button"
-        className={locale === "ja" ? "active" : ""}
-        onClick={() => onSwitch("ja")}
+        className={locale === 'ja' ? 'active' : ''}
+        onClick={() => onSwitch('ja')}
       >
         日本語
       </button>
       <button
         type="button"
-        className={locale === "en" ? "active" : ""}
-        onClick={() => onSwitch("en")}
+        className={locale === 'en' ? 'active' : ''}
+        onClick={() => onSwitch('en')}
       >
         English
       </button>
     </div>
-  );
+  )
 }

@@ -51,8 +51,7 @@ export function featurePopover(
 ): Popup {
   const rows = Object.entries(props).filter(([k]) => k !== 'osm_id')
   const osmId = String(props.osm_id ?? '')
-  const title =
-    (props.name as string) || (props['class'] as string) || t`ルート情報`
+  const title = (props.name as string) || (props['class'] as string) || t`ルート情報`
   const links = buildLinks(lngLat.lat, lngLat.lng, osmId, type, map.getZoom())
 
   const linkHtml = links

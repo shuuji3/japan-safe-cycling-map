@@ -5,7 +5,7 @@ args:
   # Geofabrik URL for the Japan extract (downloaded by the build script)
   osm_url:
     description: URL of the Japan OSM PBF extract
-    default: "https://download.geofabrik.de/asia/japan-latest.osm.pbf"
+    default: 'https://download.geofabrik.de/asia/japan-latest.osm.pbf'
 sources:
   osm:
     type: osm
@@ -226,7 +226,7 @@ examples:
         highway: footway
         bicycle: no
     output: []
-  - name: "advisory lane stays bike_lane (日本: 自転車レーン)"
+  - name: 'advisory lane stays bike_lane (日本: 自転車レーン)'
     input:
       geometry: line
       source: osm
