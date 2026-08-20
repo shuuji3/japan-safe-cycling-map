@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { useLingui } from '@lingui/react'
 import {
   FullscreenControl,
@@ -33,7 +33,7 @@ setWorkerUrl(workerUrl)
 function MapComponent() {
   const { i18n } = useLingui()
   const [mapContainer, setMapContainer] = useState<HTMLDivElement | null>(null)
-  const mapRef = { current: null as MapLibreMap | null }
+  const mapRef = useRef<MapLibreMap | null>(null)
 
   // Centering Japan
   const [lng, setLng] = useState(139.9599)
@@ -53,7 +53,8 @@ function MapComponent() {
 
   // Which basemap is shown: Protomaps street map, or GSI satellite hybrid.
   const [basemap, setBasemap] = useState<Basemap>('map')
-  const basemapRef = { current: basemap }
+  const basemapRef = useRef(basemap)
+  basemapRef.current = basemap
 
   useEffect(() => {
     if (mapRef.current !== null || !mapContainer) {
