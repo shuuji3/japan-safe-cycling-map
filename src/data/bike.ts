@@ -164,6 +164,10 @@ export function initBikeLayers(map: MapLibreMap): void {
     maxzoom: 16,
   } as any);
 
+  // Insert the overlay below the basemap's symbol (place-name/label) layers so
+  // labels stay readable on top; without an anchor the lines would cover them.
+  const labelAnchorId = map.getStyle().layers.find((l) => l.type === "symbol")?.id;
+
   // Draw order: safest (green) on top, least-safe (gray "other") at the bottom so
   // the green dedicated/separated lanes are never covered by gray ancillary lines.
   // addLayer stacks later layers above earlier ones, so iterate in reverse safety.
@@ -206,6 +210,7 @@ export function initBikeLayers(map: MapLibreMap): void {
             ? ["in", "class", def.id, ...def.aliases]
             : ["==", "class", def.id],
       } as any,
+      labelAnchorId,
     );
   }
 
@@ -245,6 +250,7 @@ export function initBikeLayers(map: MapLibreMap): void {
         "filter": ["==", "network", def.id],
         "minzoom": 4,
       } as any,
+      labelAnchorId,
     );
   }
 }
