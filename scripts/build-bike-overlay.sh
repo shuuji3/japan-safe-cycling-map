@@ -34,7 +34,7 @@ fi
 
 echo "Building bike overlay (z$MINZOOM-z$MAXZOOM) ..."
 java -Xmx8g -jar "$PLANETILER_JAR" generate-custom \
-  --schema=scripts/planetiler/bike-schema.yml \
+  --schema=scripts/planetiler-bike-schema.yml \
   --osm_path="$OSM_PATH" \
   --output="$OUTPUT" \
   --minzoom="$MINZOOM" \

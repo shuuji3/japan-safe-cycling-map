@@ -55,7 +55,7 @@ $(OUTPUT): $(ROUTES_GEOJSON) $(PLANETILER_JAR) FORCE
 		-Xmx8g \
 		-jar $(PLANETILER_JAR) \
 		generate-custom \
-		--schema=scripts/planetiler/bike-schema.yml \
+		--schema=scripts/planetiler-bike-schema.yml \
 		--osm_path=$(OSM_PATH) \
 		--output=$(OUTPUT) \
 		--minzoom=$(MINZOOM) \

@@ -54,7 +54,7 @@ flowchart TB
    (pyosmium), since Planetiler can't resolve relations onto member ways.
 3. Build the overlay `public/bike.pmtiles` (z0–z16) with Planetiler via the
    project [`Makefile`](Makefile) (`make`, schema
-   [scripts/planetiler/bike-schema.yml](scripts/planetiler/bike-schema.yml)),
+   [scripts/planetiler-bike-schema.yml](scripts/planetiler-bike-schema.yml)),
    using both the OSM extract and the route GeoJSON as sources.
 4. Upload `public/bike.pmtiles` (>20MB) to the cloud storage from GitHub Actions
    [.github/workflows/publish-bike-tiles.yml](.github/workflows/publish-bike-tiles.yml).
