@@ -24,6 +24,7 @@ import {
 import { featurePopover } from './featureInfo'
 import { applyBasemap, Basemap, refreshAttribution } from './basemap'
 import { LayerSwitcher } from '../components/LayerSwitcher'
+import { LoadingOverlay } from '../components/LoadingOverlay'
 import { MobileNav } from '../components/MobileNav'
 
 // maplibre-gl v6 no longer exposes the deprecated global `workerUrl`; the
@@ -56,6 +57,8 @@ function MapComponent() {
   const basemapRef = useRef(basemap)
   basemapRef.current = basemap
 
+  const [bikeLoaded, setBikeLoaded] = useState(false)
+
   useEffect(() => {
     if (mapRef.current !== null || !mapContainer) {
       return
@@ -69,6 +72,12 @@ function MapComponent() {
       style: 'https://api.protomaps.com/styles/v5/light/en.json?key=51f8408cd47ce4e9',
     })
     mapRef.current = map
+
+    map.on('idle', () => {
+      if (map.isSourceLoaded('bike-overlay')) {
+        setBikeLoaded(true)
+      }
+    })
 
     map.on('load', () => {
       initBikeLayers(map)
@@ -203,6 +212,7 @@ function MapComponent() {
         onLegendToggle={() => setLegendOpen((v) => !v)}
       />
       <LayerSwitcher mode={basemap} onToggle={setBasemap} />
+      {!bikeLoaded && <LoadingOverlay />}
       <div ref={setMapContainer} className="map-container" />
     </div>
   )
