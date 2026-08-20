@@ -84,7 +84,7 @@ npm run update-bike-data
 The bile road tile is published to cloud storage from GitHub Actions
 workflow. The site itself deploys to GitHub Pages on push
 to `feat/japan-safe-cycling-map` branch, reading the bike tile from the cloud storage URL set in
-`REACT_APP_BIKE_PMTILES_URL`.
+`VITE_BIKE_PMTILES_URL`.
 
 ## Not implemented
 
