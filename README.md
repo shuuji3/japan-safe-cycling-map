@@ -21,7 +21,7 @@ by [Protomaps](https://protomaps.com). An aerial mode switches to a
 hybrid](https://maps.gsi.go.jp/development/ichiran.html)
 via the basemap switcher.
 
-Legend categories for bake roads in Japan:
+Legend categories for bicycle roads in Japan:
 
 - <img src="img/swatch-cycleway.png" alt="" width="12"> 自転車専用道路・自転車道 (dedicated cycleways)
 - <img src="img/swatch-bike-lane.png" alt="" width="12"> 自転車専用通行帯 (cycle lanes)
