@@ -210,6 +210,21 @@ examples:
           class: bicycle_designated
           highway: pedestrian
           bicycle: permissive
+  - name: shared pedestrian zone with bicycle yes
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: pedestrian
+        bicycle: yes
+    output:
+      - layer: bike
+        geometry: line
+        min_zoom: 0
+        tags:
+          class: bicycle_designated
+          highway: pedestrian
+          bicycle: yes
   - name: plain road with bicycle extends should not be designated
     input:
       geometry: line
