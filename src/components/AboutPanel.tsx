@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import { LanguageToggle } from './LanguageToggle'
+import { PrivacyNotice } from './PrivacyNotice'
 import { SourceLinks } from './SourceLinks'
 
 interface Props {
@@ -21,7 +22,6 @@ export function AboutPanel({ locale, onSwitch }: Props) {
           <SourceLinks withLabel />
         </div>
       </div>
-      <hr className="about-divider" />
       <div className="about-row">
         <span className="about-label">
           <Trans>言語</Trans>
@@ -30,6 +30,7 @@ export function AboutPanel({ locale, onSwitch }: Props) {
           <LanguageToggle locale={locale} onSwitch={onSwitch} />
         </div>
       </div>
+      <PrivacyNotice />
     </div>
   )
 }

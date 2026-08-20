@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import { LanguageToggle } from './LanguageToggle'
+import { PrivacyNotice } from './PrivacyNotice'
 import { SourceLinks } from './SourceLinks'
 
 interface Props {
@@ -11,14 +12,17 @@ interface Props {
 // footer of the desktop legend sidebar.
 export function SourceFooter({ locale, onSwitch }: Props) {
   return (
-    <div className="sidebar-footer">
-      <div className="github-link">
-        <span className="source-label">
-          <Trans>ソースコード</Trans>
-        </span>
-        <SourceLinks />
+    <>
+      <div className="sidebar-footer">
+        <div className="github-link">
+          <span className="source-label">
+            <Trans>ソースコード</Trans>
+          </span>
+          <SourceLinks />
+        </div>
+        <LanguageToggle locale={locale} onSwitch={onSwitch} />
       </div>
-      <LanguageToggle locale={locale} onSwitch={onSwitch} />
-    </div>
+      <PrivacyNotice />
+    </>
   )
 }
