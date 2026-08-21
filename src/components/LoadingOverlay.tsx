@@ -10,6 +10,7 @@ export function LoadingOverlay() {
           <img src="./favicon.svg" alt="" className="logo-image" aria-hidden="true" />
         </span>
       </div>
+      <p className="bike-loading-text">loading bicycle roads data…</p>
     </div>
   )
 }
