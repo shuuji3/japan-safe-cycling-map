@@ -69,6 +69,9 @@ layers:
           # NOTE: cycleway:*:lane=advisory does NOT create a class of its own — it is
           # a common sub-detail of a bike lane (自転車レーン) and still maps to bike_lane.
           # cycleway=shared_lane + cycleway:lane=pictogram maps to shared_lane.
+          - key: osm_id
+            value: '${ feature.id }'
+            type: long
           - key: class
             value: >-
               ${ feature.tags.has("highway","cycleway") ? "cycleway" :

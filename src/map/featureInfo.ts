@@ -21,7 +21,7 @@ function buildLinks(
   type: 'way' | 'relation' | 'node',
   zoom: number,
 ): Link[] {
-  const z = Math.round(zoom)
+  const z = Math.ceil(zoom)
   const idParam = type === 'node' ? `n` : type === 'relation' ? `r` : `w`
   return [
     {
@@ -31,8 +31,8 @@ function buildLinks(
     {
       label: t`OSMエディタ`,
       href: osmId
-        ? `https://www.openstreetmap.org/edit?${type}=${osmId}#map=${z}/${lat}/${lng}`
-        : `https://www.openstreetmap.org/edit#map=${z}/${lat}/${lng}`,
+        ? `https://www.openstreetmap.org/edit?editor=id&${type}=${osmId}#map=${z}/${lat}/${lng}`
+        : `https://www.openstreetmap.org/edit?editor=id#map=${z}/${lat}/${lng}`,
     },
     {
       label: t`Rapid`,
