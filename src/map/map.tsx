@@ -69,7 +69,7 @@ function MapComponent() {
       center: [lng, lat],
       zoom: zoom,
       hash: true,
-      style: 'https://api.protomaps.com/styles/v5/light/en.json?key=51f8408cd47ce4e9',
+      style: `https://api.protomaps.com/styles/v5/light/en.json?key=${import.meta.env.VITE_PROTOMAPS_KEY}`,
     })
     mapRef.current = map
 
