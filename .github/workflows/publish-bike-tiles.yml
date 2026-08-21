@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Setup mise (java, uv)
+      - name: Setup mise
         uses: jdx/mise-action@v4
 
       - name: Resolve OSM extract date
@@ -26,13 +26,6 @@ jobs:
           path: .cache
           key: bike-cache-${{ runner.os }}-${{ steps.osm.outputs.stamp }}
 
-      - name: Install rclone
-        run: |
-          curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
-          unzip -o rclone-current-linux-amd64.zip
-          sudo cp rclone-*-linux-amd64/rclone /usr/local/bin/
-          rclone version
-
       - name: Sync Python deps
         run: uv sync --frozen --no-install-project
 
@@ -46,4 +39,5 @@ jobs:
           RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           RCLONE_CONFIG_R2_ENDPOINT: https://${{ vars.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
-        run: rclone copyto public/bicycle-roads.pmtiles r2:${{ vars.R2_BUCKET }}/bicycle-roads.pmtiles --s3-no-check-bucket
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+        run: pnpm upload-bike-data

@@ -13,7 +13,8 @@
     "test": "vp test",
     "i18n:extract": "lingui extract",
     "i18n:compile": "lingui compile",
-    "update-bike-data": "make"
+    "update-bike-data": "make",
+    "upload-bike-data": "rclone copyto public/bicycle-roads.pmtiles r2:${R2_BUCKET}/bicycle-roads.pmtiles --s3-no-check-bucket"
   },
   "dependencies": {
     "@lingui/core": "^6.6.0",

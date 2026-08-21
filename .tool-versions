@@ -3,3 +3,4 @@ node 26
 pnpm latest
 uv latest
 vp latest
+rclone latest
