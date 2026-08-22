@@ -13,26 +13,43 @@ jobs:
       - name: Setup mise
         uses: jdx/mise-action@v4
 
-      - name: Resolve OSM extract date
+      - name: Resolve OSM replication sequence
         id: osm
         run: |
-          url="$(curl -sI -o /dev/null -w '%{redirect_url}' https://download.geofabrik.de/asia/japan-latest.osm.pbf)"
-          echo "stamp=$(basename "$url" .osm.pbf)" >> "$GITHUB_OUTPUT"
+          seq="$(curl -s https://download.geofabrik.de/asia/japan-updates/state.txt | sed -n 's/^sequenceNumber=//p')"
+          echo "seq=$seq" >> "$GITHUB_OUTPUT"
 
       - name: Cache OSM extract and build tools (.cache)
         uses: actions/cache@v6
         id: cache
         with:
           path: .cache
-          key: bike-cache-${{ runner.os }}-${{ steps.osm.outputs.stamp }}
+          key: osm-cache
+
+      - name: Detect OSM update
+        id: update
+        run: |
+          if [ -f .cache/japan.osm.pbf ] && [ -f .cache/osm-seq ] && [ "$(cat .cache/osm-seq)" = "${{ steps.osm.outputs.seq }}" ]; then
+            echo "needs_update=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_update=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Sync Python deps
         run: uv sync --frozen --no-install-project
 
       - name: Build bike tiles
+        if: steps.update.outputs.needs_update == 'true'
         run: make
 
+      - name: Persist OSM sequence
+        if: steps.update.outputs.needs_update == 'true'
+        run: |
+          mkdir -p .cache
+          echo "${{ steps.osm.outputs.seq }}" > .cache/osm-seq
+
       - name: Upload tiles to R2
+        if: steps.update.outputs.needs_update == 'true'
         env:
           RCLONE_CONFIG_R2_TYPE: s3
           RCLONE_CONFIG_R2_PROVIDER: Cloudflare
