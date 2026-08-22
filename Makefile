@@ -24,18 +24,22 @@ clean:
 
 # download
 #
-# Download OpenStreetMap data. FORCE re-checks the server on every run; curl -z
-# only fetches when the remote is newer, so the daily-changing extract is not
-# blindly re-downloaded.
+# Download OpenStreetMap data. FORCE re-checks the server on every run; when a
+# local extract already exists we update it incrementally via pyosmium-up-to-date
+# (only the diffs since the last update), falling back to a full download when
+# the file is missing.
 $(OSM_PATH): FORCE
 	mkdir -p $(@D)
-	curl \
-		--user-agent "$(OSM_UA)" \
-		--location \
-		--fail \
-		--output $@ \
-		--time-cond $@ \
-		$(OSM_URL)
+	@if [ -f $@ ]; then \
+		uv run --no-sync pyosmium-up-to-date $@; \
+	else \
+		curl \
+			--user-agent "$(OSM_UA)" \
+			--location \
+			--fail \
+			--output $@ \
+			$(OSM_URL); \
+	fi
 
 # Download Planetiler jar only if missing
 $(PLANETILER_JAR): FORCE
