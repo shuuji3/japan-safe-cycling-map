@@ -1,6 +1,8 @@
 name: Publish bike tiles to R2
 
 on:
+  schedule:
+    - cron: '0 21 * * *'
   workflow_dispatch:
 
 jobs:
