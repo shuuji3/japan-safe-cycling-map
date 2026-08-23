@@ -31,22 +31,25 @@ layers:
         geometry: line
         min_zoom: 0
         include_when:
-          __any__:
-            - highway: cycleway
-            - cycleway: __any__
-            - cycleway:left: __any__
-            - cycleway:right: __any__
-            - cycleway:both: __any__
-            # shared footways/roads where cycling is allowed
-            - __all__:
-                highway:
-                  - footway
-                  - path
-                  - pedestrian
-                bicycle:
-                  - designated
-                  - yes
-                  - permissive
+          __all__:
+            - __any__:
+                - highway: cycleway
+                - cycleway: __any__
+                - cycleway:left: __any__
+                - cycleway:right: __any__
+                - cycleway:both: __any__
+                # shared footways/roads where cycling is allowed
+                - __all__:
+                    highway:
+                      - footway
+                      - path
+                      - pedestrian
+                    bicycle:
+                      - designated
+                      - yes
+                      - permissive
+            - __not__:
+                highway: motorway
         attributes:
           # facility type, captures the safety-relevant distinction.
           # Per JA:Tag:highway=cycleway "日本での解釈" (2019 decision):
@@ -416,6 +419,17 @@ examples:
           highway: residential
           cycleway:left: lane
           cycleway:right: no
+  - name: motorway with bicycle=no and cycleway:both=no excluded (cycling is illegal)
+    input:
+      geometry: line
+      source: osm
+      tags:
+        highway: motorway
+        name: 常磐自動車道
+        bicycle: no
+        cycleway:both: no
+        oneway: yes
+    output: []
   - name: national cycle route member way
     input:
       geometry: line
