@@ -8,12 +8,9 @@ export const PM_SOURCE = 'protomaps'
 
 export const GSI_SOURCE = 'gsi-seamlessphoto'
 export const GSI_LAYER = 'gsi-seamlessphoto'
-// Overlay layer drawing administrative boundaries (OSM admin_level 3-8, i.e.
-// prefectures/cities/towns) as a dashed "typical city border" line. Mirrors the
-// reference `boundary-land-level-4` layer from yuiseki/vector-tile-builder; the
-// Protomaps basemap only exposes the minimum admin_level of a boundary line as
-// `kind_detail`.
 export const BOUNDARY_LAYER = 'boundary-city'
+export const BOUNDARY_MASK_LAYER = 'boundary-land-mask'
+const SEA_KINDS = ['sea', 'ocean', 'bay', 'strait', 'fjord']
 export const GSI_URL = 'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg'
 export const GSI_DEVELOP_PAGE = 'https://maps.gsi.go.jp/development/ichiran.html'
 
@@ -86,6 +83,11 @@ function hideOpaqueLayers(map: MapLibreMap): void {
       }
       continue
     }
+    // Keep the ocean land-mask so boundary lines stay hidden over the sea even
+    // in aerial mode (other opaque fills are hidden to reveal the photo).
+    if (l.id === BOUNDARY_MASK_LAYER) {
+      continue
+    }
     try {
       map.setLayoutProperty(l.id, 'visibility', 'none')
     } catch {
@@ -122,11 +124,13 @@ function ensureSatellite(map: MapLibreMap): void {
   map.addLayer({ id: GSI_LAYER, type: 'raster', source: GSI_SOURCE }, bottomAnchorId(map))
 }
 
-// Add the city-border overlay, sourced from the Protomaps basemap boundaries
-// layer so no tile rebuild is needed. Drawn as a dashed line matching the
-// reference boundary-land-level-4 style.
 export function initCityBoundaries(map: MapLibreMap): void {
   if (map.getLayer(BOUNDARY_LAYER)) {
+    return
+  }
+  const boundaryColor = map.getPaintProperty('boundaries', 'line-color')
+  const waterColor = map.getPaintProperty('water', 'fill-color')
+  if (typeof boundaryColor !== 'string' || typeof waterColor !== 'string') {
     return
   }
   map.addLayer({
@@ -138,10 +142,18 @@ export function initCityBoundaries(map: MapLibreMap): void {
     filter: ['all', ['>=', ['get', 'kind_detail'], 3], ['<=', ['get', 'kind_detail'], 7]],
     layout: { 'line-join': 'round' },
     paint: {
-      'line-color': '#9e9cab',
+      'line-color': boundaryColor,
       'line-dasharray': [3, 1, 1, 1],
       'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.4, 5, 1, 12, 3],
     },
+  } as any)
+  map.addLayer({
+    id: BOUNDARY_MASK_LAYER,
+    type: 'fill',
+    source: PM_SOURCE,
+    'source-layer': 'water',
+    filter: ['in', 'kind', ...SEA_KINDS],
+    paint: { 'fill-color': waterColor, 'fill-opacity': 1 },
   } as any)
 }
 
