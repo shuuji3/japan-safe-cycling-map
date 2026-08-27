@@ -135,7 +135,7 @@ export function initCityBoundaries(map: MapLibreMap): void {
     source: PM_SOURCE,
     'source-layer': 'boundaries',
     minzoom: 2,
-    filter: ['all', ['>=', ['get', 'kind_detail'], 3], ['<=', ['get', 'kind_detail'], 8]],
+    filter: ['all', ['>=', ['get', 'kind_detail'], 3], ['<=', ['get', 'kind_detail'], 7]],
     layout: { 'line-join': 'round' },
     paint: {
       'line-color': '#9e9cab',
