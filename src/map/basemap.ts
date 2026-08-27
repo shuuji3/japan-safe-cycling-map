@@ -8,6 +8,12 @@ export const PM_SOURCE = 'protomaps'
 
 export const GSI_SOURCE = 'gsi-seamlessphoto'
 export const GSI_LAYER = 'gsi-seamlessphoto'
+// Overlay layer drawing administrative boundaries (OSM admin_level 3-8, i.e.
+// prefectures/cities/towns) as a dashed "typical city border" line. Mirrors the
+// reference `boundary-land-level-4` layer from yuiseki/vector-tile-builder; the
+// Protomaps basemap only exposes the minimum admin_level of a boundary line as
+// `kind_detail`.
+export const BOUNDARY_LAYER = 'boundary-city'
 export const GSI_URL = 'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg'
 export const GSI_DEVELOP_PAGE = 'https://maps.gsi.go.jp/development/ichiran.html'
 
@@ -114,6 +120,29 @@ function ensureSatellite(map: MapLibreMap): void {
   } as any)
   // Insert at the very bottom (above background, below every Protomaps layer).
   map.addLayer({ id: GSI_LAYER, type: 'raster', source: GSI_SOURCE }, bottomAnchorId(map))
+}
+
+// Add the city-border overlay, sourced from the Protomaps basemap boundaries
+// layer so no tile rebuild is needed. Drawn as a dashed line matching the
+// reference boundary-land-level-4 style.
+export function initCityBoundaries(map: MapLibreMap): void {
+  if (map.getLayer(BOUNDARY_LAYER)) {
+    return
+  }
+  map.addLayer({
+    id: BOUNDARY_LAYER,
+    type: 'line',
+    source: PM_SOURCE,
+    'source-layer': 'boundaries',
+    minzoom: 2,
+    filter: ['all', ['>=', ['get', 'kind_detail'], 3], ['<=', ['get', 'kind_detail'], 8]],
+    layout: { 'line-join': 'round' },
+    paint: {
+      'line-color': '#9e9cab',
+      'line-dasharray': [3, 1, 1, 1],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.4, 5, 1, 12, 3],
+    },
+  } as any)
 }
 
 function removeSatellite(map: MapLibreMap): void {

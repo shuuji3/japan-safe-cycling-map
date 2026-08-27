@@ -22,7 +22,7 @@ import {
   setRouteNetworkVisible,
 } from '../data/bike'
 import { featurePopover } from './featureInfo'
-import { applyBasemap, Basemap, refreshAttribution } from './basemap'
+import { applyBasemap, Basemap, initCityBoundaries, refreshAttribution } from './basemap'
 import { LayerSwitcher } from '../components/LayerSwitcher'
 import { LoadingOverlay } from '../components/LoadingOverlay'
 import { MobileNav } from '../components/MobileNav'
@@ -80,6 +80,8 @@ function MapComponent() {
     })
 
     map.on('load', () => {
+      // City-border overlay first so bike roads draw on top of the boundaries.
+      initCityBoundaries(map)
       initBikeLayers(map)
       // Start from the requested basemap (style is fully loaded here).
       applyBasemap(map, basemapRef.current)
