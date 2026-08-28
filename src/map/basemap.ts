@@ -128,33 +128,39 @@ export function initCityBoundaries(map: MapLibreMap): void {
   if (map.getLayer(BOUNDARY_LAYER)) {
     return
   }
-  const boundaryColor = map.getPaintProperty('boundaries', 'line-color')
   const waterColor = map.getPaintProperty('water', 'fill-color')
-  if (typeof boundaryColor !== 'string' || typeof waterColor !== 'string') {
+  if (typeof waterColor !== 'string') {
     return
   }
-  map.addLayer({
-    id: BOUNDARY_LAYER,
-    type: 'line',
-    source: PM_SOURCE,
-    'source-layer': 'boundaries',
-    minzoom: 2,
-    filter: ['all', ['>=', ['get', 'kind_detail'], 3], ['<=', ['get', 'kind_detail'], 7]],
-    layout: { 'line-join': 'round' },
-    paint: {
-      'line-color': boundaryColor,
-      'line-dasharray': [3, 1, 1, 1],
-      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.4, 5, 1, 12, 3],
-    },
-  } as any)
-  map.addLayer({
-    id: BOUNDARY_MASK_LAYER,
-    type: 'fill',
-    source: PM_SOURCE,
-    'source-layer': 'water',
-    filter: ['in', 'kind', ...SEA_KINDS],
-    paint: { 'fill-color': waterColor, 'fill-opacity': 1 },
-  } as any)
+  const labelAnchorId = map.getStyle().layers.find((l) => l.type === 'symbol')?.id
+  map.addLayer(
+    {
+      id: BOUNDARY_LAYER,
+      type: 'line',
+      source: PM_SOURCE,
+      'source-layer': 'boundaries',
+      minzoom: 2,
+      filter: ['all', ['>=', ['get', 'kind_detail'], 3], ['<=', ['get', 'kind_detail'], 7]],
+      layout: { 'line-join': 'round' },
+      paint: {
+        'line-color': '#a7b1b3',
+        'line-dasharray': [3, 1, 1, 1],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.4, 8, 1, 12, 2.5],
+      },
+    } as any,
+    labelAnchorId,
+  )
+  map.addLayer(
+    {
+      id: BOUNDARY_MASK_LAYER,
+      type: 'fill',
+      source: PM_SOURCE,
+      'source-layer': 'water',
+      filter: ['in', 'kind', ...SEA_KINDS],
+      paint: { 'fill-color': waterColor, 'fill-opacity': 1 },
+    } as any,
+    labelAnchorId,
+  )
 }
 
 function removeSatellite(map: MapLibreMap): void {
