@@ -21,13 +21,12 @@ jobs:
           seq="$(curl -s https://download.geofabrik.de/asia/japan-updates/state.txt | sed -n 's/^sequenceNumber=//p')"
           echo "seq=$seq" >> "$GITHUB_OUTPUT"
 
-      - name: Cache OSM extract and build tools (.cache)
-        uses: actions/cache@v6
-        id: cache
+      - name: Restore OSM extract and build tools (.cache)
+        uses: actions/cache/restore@v6
         with:
           path: .cache
           key: osm-cache
-          save-always: true
+          fail-on-cache-miss: false
 
       - name: Detect OSM update
         id: update
@@ -61,3 +60,10 @@ jobs:
           RCLONE_CONFIG_R2_ENDPOINT: https://${{ vars.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
           R2_BUCKET: ${{ vars.R2_BUCKET }}
         run: pnpm upload-bike-data
+
+      - name: Save OSM extract and build tools (.cache)
+        if: steps.update.outputs.needs_update == 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: .cache
+          key: osm-cache
