@@ -15,13 +15,43 @@ jobs:
       - name: Setup mise
         uses: jdx/mise-action@v4
 
-      - name: Resolve OSM replication sequence
+      # decide whether an update is needed BEFORE restoring the ~2.6GB data cache.
+      # state.txt is a cheap http call; the old japan-updates path now 301-redirects.
+      - name: Resolve latest OSM replication sequence
         id: osm
         run: |
-          seq="$(curl -s https://download.geofabrik.de/asia/japan-updates/state.txt | sed -n 's/^sequenceNumber=//p')"
+          seq="$(curl -sL --fail --max-time 60 https://download.geofabrik.de/asia/japan/updates/state.txt | sed -n 's/^sequenceNumber=//p')"
+          if ! [[ "$seq" =~ ^[0-9]+$ ]]; then
+            echo "ERROR: failed to resolve a valid OSM replication sequence (got '$seq')" >&2
+            exit 1
+          fi
           echo "seq=$seq" >> "$GITHUB_OUTPUT"
 
+      # tiny cache: remembers the sequence we last built, so a no-update run never pulls the big cache.
+      # immutable caches -> unique key per sequence + static prefix fallback reads the newest.
+      - name: Restore last OSM sequence
+        uses: actions/cache/restore@v6
+        with:
+          path: seq
+          key: osm-seq-${{ steps.osm.outputs.seq }}
+          restore-keys: |
+            osm-seq-
+          fail-on-cache-miss: false
+
+      - name: Detect OSM update needed
+        id: update
+        run: |
+          last="$(cat seq/last-seq 2>/dev/null || true)"
+          echo "cached_seq='$last'  latest_seq='${{ steps.osm.outputs.seq }}'"
+          if [ -n "$last" ] && [ "$last" = "${{ steps.osm.outputs.seq }}" ]; then
+            echo "needs_update=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_update=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ---- everything below runs only when OSM data actually changed ----
       - name: Restore OSM extract and build tools (.cache)
+        if: steps.update.outputs.needs_update == 'true'
         uses: actions/cache/restore@v6
         with:
           path: .cache
@@ -30,27 +60,19 @@ jobs:
             osm-cache
           fail-on-cache-miss: false
 
-      - name: Detect OSM update
-        id: update
-        run: |
-          if [ -f .cache/japan.osm.pbf ] && [ -f .cache/osm-seq ] && [ "$(cat .cache/osm-seq)" = "${{ steps.osm.outputs.seq }}" ]; then
-            echo "needs_update=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "needs_update=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Sync Python deps
+        if: steps.update.outputs.needs_update == 'true'
         run: uv sync --frozen --no-install-project
 
       - name: Build bike tiles
         if: steps.update.outputs.needs_update == 'true'
         run: make
 
-      - name: Persist OSM sequence
+      - name: Persist latest OSM sequence
         if: steps.update.outputs.needs_update == 'true'
         run: |
-          mkdir -p .cache
-          echo "${{ steps.osm.outputs.seq }}" > .cache/osm-seq
+          mkdir -p seq
+          echo "${{ steps.osm.outputs.seq }}" > seq/last-seq
 
       - name: Upload tiles to R2
         if: steps.update.outputs.needs_update == 'true'
@@ -63,9 +85,17 @@ jobs:
           R2_BUCKET: ${{ vars.R2_BUCKET }}
         run: pnpm upload-bike-data
 
+      # new immutable entries only per real update; restore always finds the newest base via prefix.
       - name: Save OSM extract and build tools (.cache)
         if: steps.update.outputs.needs_update == 'true'
         uses: actions/cache/save@v6
         with:
           path: .cache
           key: osm-cache-${{ steps.osm.outputs.seq }}
+
+      - name: Save latest OSM sequence
+        if: steps.update.outputs.needs_update == 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: seq
+          key: osm-seq-${{ steps.osm.outputs.seq }}
